@@ -12,7 +12,7 @@ const CATEGORY_ICONS = {
 const QRCard = ({ itemId, itemName, category }) => {
   const canvasRef = useRef(null)
   const [qrDataUrl, setQrDataUrl] = useState(null)
-  const publicUrl = `${window.location.origin}/found/${itemId}`
+  const publicUrl = `${window.location.origin}${import.meta.env.DEV ? '' : '/QRkFind'}/found/${itemId}`
 
   useEffect(() => {
     if (!canvasRef.current || !itemId) return
