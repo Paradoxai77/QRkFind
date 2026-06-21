@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production build outputs
+client/dist/
+
+# Environment files and secrets
+.env
+client/.env
+server/.env
+*.local
+
+# Database and uploads
+server/uploads/db.json
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Editor/OS configurations
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
