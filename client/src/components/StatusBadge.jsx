@@ -1,18 +1,18 @@
 const STATUS_CONFIG = {
   active: {
     label: 'Active',
-    className: 'bg-accent-100 text-accent-600 border border-accent-200',
-    dot: 'bg-accent-500',
+    className: 'bg-lime/15 text-lime border border-lime/30',
+    dot: 'bg-lime animate-pulse',
   },
   lost: {
     label: 'Lost',
-    className: 'bg-warn-100 text-warn-600 border border-warn-200',
-    dot: 'bg-warn-500',
+    className: 'bg-orange-900/30 text-orange-400 border border-orange-700/30',
+    dot: 'bg-orange-400 animate-pulse',
   },
   recovered: {
     label: 'Recovered',
-    className: 'bg-primary-100 text-primary-700 border border-primary-200',
-    dot: 'bg-primary-600',
+    className: 'bg-blue-900/30 text-blue-400 border border-blue-700/30',
+    dot: 'bg-blue-400',
   },
 }
 

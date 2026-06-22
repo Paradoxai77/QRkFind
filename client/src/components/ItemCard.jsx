@@ -29,26 +29,32 @@ const ItemCard = ({ item, onDelete, onStatusChange }) => {
     recovered: RotateCcw,
   }[item.status]
 
+  const statusColors = {
+    active: 'bg-lime/10 text-lime border-lime/20 hover:bg-lime/20',
+    lost: 'bg-orange-900/20 text-orange-400 border-orange-800/30 hover:bg-orange-900/30',
+    recovered: 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10',
+  }
+
   return (
-    <div className="card card-hover p-5 group animate-fade-in">
+    <div className="bg-card-dark border-2 border-white/8 rounded-2xl p-5 group animate-fade-in hover:-translate-y-1 hover:border-lime/20 transition-all duration-300 card-glow">
       {/* Top row */}
       <div className="flex items-start gap-4 mb-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary-50 to-blue-50 border border-primary-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+        <div className="w-12 h-12 bg-lime/10 border border-lime/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 group-hover:bg-lime/20 transition-all duration-300">
           {icon}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-display font-bold text-ink text-base leading-tight truncate">
+          <h3 className="font-display font-bold text-white text-base leading-tight truncate">
             {item.name}
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5 capitalize">{item.category}</p>
-          <p className="text-xs text-slate-400 mt-1">{format(item.createdAt)}</p>
+          <p className="text-xs text-white/40 mt-0.5 capitalize">{item.category}</p>
+          <p className="text-xs text-white/25 mt-1">{format(item.createdAt)}</p>
         </div>
         <StatusBadge status={item.status} />
       </div>
 
       {/* Description */}
       {item.description && (
-        <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-white/40 mb-4 line-clamp-2 leading-relaxed">
           {item.description}
         </p>
       )}
@@ -57,15 +63,14 @@ const ItemCard = ({ item, onDelete, onStatusChange }) => {
       <div className="flex items-center gap-2 flex-wrap">
         <Link
           to={`/dashboard/item/${item._id}`}
-          className="btn-secondary text-xs py-2 px-4 flex items-center gap-1.5"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 border-lime/30 text-lime bg-lime/10 hover:bg-lime hover:text-dark transition-all duration-200"
         >
           <Eye size={13} /> View QR
         </Link>
 
         <button
           onClick={handleStatusToggle}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border transition-all duration-200
-            bg-warn-50 text-warn-600 border-warn-200 hover:bg-warn-100"
+          className={`inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 transition-all duration-200 ${statusColors[item.status]}`}
         >
           <StatusIcon size={13} />
           {statusActionLabel}
@@ -73,7 +78,7 @@ const ItemCard = ({ item, onDelete, onStatusChange }) => {
 
         <button
           onClick={() => onDelete(item._id, item.name)}
-          className="btn-danger text-xs py-2 px-3 ml-auto"
+          className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-2 rounded-xl border-2 border-red-800/30 bg-red-900/20 text-red-400 hover:bg-red-900/40 transition-all duration-200 ml-auto"
           aria-label={`Delete ${item.name}`}
         >
           <Trash2 size={13} />

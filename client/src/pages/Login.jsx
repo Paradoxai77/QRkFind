@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle, Scan } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const Login = () => {
@@ -33,22 +33,40 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface flex">
-      {/* Left panel — decorative */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 via-primary-700 to-blue-800 flex-col justify-center items-center p-12 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-1/4 -left-20 w-64 h-64 bg-white/5 rounded-full blur-2xl" />
-          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl" />
+    <div className="min-h-screen bg-dark flex">
+      {/* Left panel — decorative (Positivus style) */}
+      <div className="hidden lg:flex lg:w-1/2 bg-card-dark flex-col justify-center items-center p-12 relative overflow-hidden border-r border-white/8">
+        {/* Decorative circles */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+          <div className="absolute top-1/4 -left-20 w-64 h-64 bg-lime/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-lime/5 rounded-full blur-3xl" />
+          <div className="absolute top-10 right-10 w-48 h-48 rounded-full border border-white/5" />
+          <div className="absolute bottom-10 left-10 w-32 h-32 rounded-full border border-white/5" />
         </div>
+
         <div className="relative text-center">
-          <div className="text-7xl mb-6">🔍</div>
-          <h1 className="font-display text-4xl font-extrabold text-white mb-4">Welcome Back</h1>
-          <p className="text-primary-200 text-lg max-w-xs mx-auto leading-relaxed">
-            Your belongings are waiting. Sign in to manage your registered items.
+          {/* Spinning star */}
+          <div className="flex justify-center mb-8">
+            <svg viewBox="0 0 24 24" fill="#B9FF66" className="w-16 h-16 animate-spin-slow">
+              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+            </svg>
+          </div>
+
+          <Link to="/" className="flex items-center gap-3 justify-center mb-8">
+            <div className="w-12 h-12 bg-lime rounded-2xl flex items-center justify-center text-dark">
+              <Scan size={26} />
+            </div>
+            <span className="font-display text-3xl font-bold text-white">FindIt</span>
+          </Link>
+
+          <h1 className="font-display text-3xl font-bold text-white mb-4">Welcome Back</h1>
+          <p className="text-white/40 text-base max-w-xs mx-auto leading-relaxed mb-10">
+            Your belongings are waiting. Sign in to manage your registered items and check alerts.
           </p>
-          <div className="mt-10 grid grid-cols-3 gap-4">
+
+          <div className="grid grid-cols-3 gap-3 max-w-xs mx-auto">
             {['📱', '🔑', '🎒', '☂️', '💻', '⌚'].map(icon => (
-              <div key={icon} className="glass rounded-2xl p-4 text-3xl text-center animate-pulse-slow">
+              <div key={icon} className="bg-white/5 border border-white/8 rounded-2xl p-4 text-2xl text-center hover:bg-lime/10 hover:border-lime/20 transition-all duration-300 cursor-default">
                 {icon}
               </div>
             ))}
@@ -57,25 +75,30 @@ const Login = () => {
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
+      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 bg-dark">
         <div className="w-full max-w-md">
           {/* Logo for mobile */}
-          <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <span className="text-3xl">🔍</span>
-            <span className="font-display text-2xl font-extrabold gradient-text">FindIt</span>
+          <Link to="/" className="flex items-center gap-2.5 mb-8 lg:hidden">
+            <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark">
+              <Scan size={20} />
+            </div>
+            <span className="font-display text-xl font-bold text-white">FindIt</span>
           </Link>
 
-          <h2 className="font-display text-3xl font-extrabold text-ink mb-2">Sign In</h2>
-          <p className="text-slate-500 mb-8">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-primary-600 font-semibold hover:underline">
-              Register here
-            </Link>
-          </p>
+          <div className="mb-8">
+            <span className="section-tag mb-4 inline-block">Sign In</span>
+            <h2 className="font-display text-3xl font-bold text-white mb-2">Welcome back</h2>
+            <p className="text-white/40">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-lime font-semibold hover:text-lime-dark transition-colors">
+                Register here
+              </Link>
+            </p>
+          </div>
 
           {/* Error alert */}
           {error && (
-            <div className="flex items-center gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 mb-5 text-sm">
+            <div className="flex items-center gap-2.5 bg-red-900/30 border border-red-800 text-red-400 rounded-xl px-4 py-3 mb-5 text-sm">
               <AlertCircle size={16} className="flex-shrink-0" />
               {error}
             </div>
@@ -86,7 +109,7 @@ const Login = () => {
             <div>
               <label htmlFor="email" className="input-label">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
                 <input
                   id="email"
                   name="email"
@@ -105,12 +128,12 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label htmlFor="password" className="input-label mb-0">Password</label>
-                <button type="button" className="text-xs text-primary-600 hover:underline font-medium">
+                <button type="button" className="text-xs text-lime hover:text-lime-dark font-medium transition-colors">
                   Forgot password?
                 </button>
               </div>
               <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
                 <input
                   id="password"
                   name="password"
@@ -125,7 +148,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(s => !s)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-lime transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -137,11 +160,11 @@ const Login = () => {
               type="submit"
               id="login-submit"
               disabled={loading}
-              className="btn-primary w-full py-3.5 text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-4 text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed rounded-xl"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-dark/30 border-t-dark rounded-full animate-spin" />
                   Signing in...
                 </span>
               ) : (
