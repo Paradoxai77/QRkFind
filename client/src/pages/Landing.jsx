@@ -74,6 +74,16 @@ const Landing = () => {
             </Link>
           </div>
 
+          {/* Walkthrough Video */}
+          <div className="mt-12 max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 aspect-video animate-fade-in" style={{ animationDelay: '0.25s' }}>
+            <video
+              src="https://videotourl.com/videos/1782086808198-fe3f8030-4658-4186-84a8-b0e8b8f5eaff.mp4"
+              controls
+              className="w-full h-full object-cover"
+              title="How FindIt Opens and Functions"
+            />
+          </div>
+
           {/* Hero stats */}
           <div className="flex justify-center gap-8 mt-14 flex-wrap animate-fade-in" style={{ animationDelay: '0.3s' }}>
             {[
