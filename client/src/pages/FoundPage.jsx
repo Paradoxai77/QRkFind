@@ -254,7 +254,7 @@ const FoundPage = () => {
                   id="gps-button"
                   onClick={handleGPS}
                   disabled={gpsStatus === 'loading' || gpsStatus === 'granted'}
-                  className={`inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
+                  className={`w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
                     gpsStatus === 'granted'
                       ? 'bg-accent-50 text-accent-600 border border-accent-200'
                       : gpsStatus === 'denied'

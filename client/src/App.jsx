@@ -8,6 +8,8 @@ import AddItem from './pages/AddItem'
 import ItemDetail from './pages/ItemDetail'
 import FoundPage from './pages/FoundPage'
 import Notifications from './pages/Notifications'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminRoute from './components/AdminRoute'
 
 const App = () => {
   return (
@@ -49,6 +51,14 @@ const App = () => {
           <ProtectedRoute>
             <Notifications />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
         }
       />
 

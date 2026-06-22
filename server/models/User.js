@@ -23,6 +23,11 @@ if (process.env.USE_MOCK_DB === 'true') {
         type: String,
         required: true,
       },
+      role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+      },
     },
     { timestamps: true }
   );

@@ -4,7 +4,7 @@ import api from '../utils/api'
 import Navbar from '../components/Navbar'
 import QRCard, { CATEGORY_ICONS } from '../components/QRCard'
 import StatusBadge from '../components/StatusBadge'
-import { ArrowLeft, MapPin, Phone, Mail, MessageSquare, Clock, User, CheckCircle, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, MapPin, Phone, Mail, MessageSquare, Clock, User, CheckCircle, AlertTriangle, Copy } from 'lucide-react'
 import { formatDateTime, timeAgo } from '../utils/dateFormat'
 import toast from 'react-hot-toast'
 
@@ -191,8 +191,20 @@ const ItemDetail = () => {
                   </div>
                 )}
                 <div>
-                  <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide">Public Found URL</dt>
-                  <dd className="text-xs font-mono text-lime mt-0.5 break-all">{window.location.origin}/found/{item.itemId}</dd>
+                  <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide mb-1.5">Public Found URL</dt>
+                  <dd className="flex items-center gap-2 bg-lime/5 dark:bg-white/5 border border-lime/20 dark:border-white/10 rounded-xl p-2.5 pl-3">
+                    <span className="text-xs font-mono text-lime truncate flex-1 select-all">{window.location.origin}/found/{item.itemId}</span>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/found/${item.itemId}`);
+                        toast.success('Public URL copied! 📋');
+                      }}
+                      className="btn-ghost p-1.5 rounded-lg border-2 border-lime/30 text-lime hover:bg-lime hover:text-dark transition-all duration-200 text-xs font-semibold flex items-center justify-center flex-shrink-0"
+                      title="Copy URL"
+                    >
+                      <Copy size={14} />
+                    </button>
+                  </dd>
                 </div>
               </dl>
             </div>
@@ -200,17 +212,17 @@ const ItemDetail = () => {
             {/* Status actions */}
             <div className="rounded-2xl p-5 border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
               <h3 className="font-display font-bold dark:text-white text-dark mb-3">Change Status</h3>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex flex-col sm:flex-row gap-2">
                 {item.status !== 'active' && (
-                  <button onClick={() => handleStatusChange('active')} className="btn-ghost text-sm border" style={{ borderColor: 'var(--border-color)' }}>Set Active</button>
+                  <button onClick={() => handleStatusChange('active')} className="w-full sm:w-auto justify-center btn-ghost text-sm border" style={{ borderColor: 'var(--border-color)' }}>Set Active</button>
                 )}
                 {item.status !== 'lost' && (
-                  <button onClick={() => handleStatusChange('lost')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-orange-900/20 text-orange-400 border border-orange-700/30 hover:bg-orange-900/30 transition-colors">
+                  <button onClick={() => handleStatusChange('lost')} className="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-orange-900/20 text-orange-400 border border-orange-700/30 hover:bg-orange-900/30 transition-colors">
                     <AlertTriangle size={14} /> Mark as Lost
                   </button>
                 )}
                 {item.status !== 'recovered' && (
-                  <button onClick={() => handleStatusChange('recovered')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-lime/10 text-lime border border-lime/20 hover:bg-lime/20 transition-colors">
+                  <button onClick={() => handleStatusChange('recovered')} className="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-lime/10 text-lime border border-lime/20 hover:bg-lime/20 transition-colors">
                     <CheckCircle size={14} /> Mark Recovered
                   </button>
                 )}

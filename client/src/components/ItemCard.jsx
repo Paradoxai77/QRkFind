@@ -63,25 +63,25 @@ const ItemCard = ({ item, onDelete, onStatusChange }) => {
       )}
 
       {/* Actions */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap w-full">
         <Link
           to={`/dashboard/item/${item._id}`}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 border-lime/30 text-lime bg-lime/10 hover:bg-lime hover:text-dark transition-all duration-200"
+          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 border-lime/30 text-lime bg-lime/10 hover:bg-lime hover:text-dark transition-all duration-200 text-center"
         >
-          <Eye size={13} /> View QR
+          <Eye size={13} /> <span className="truncate">View QR</span>
         </Link>
 
         <button
           onClick={handleStatusToggle}
-          className={`inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 transition-all duration-200 ${statusColors[item.status]}`}
+          className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border-2 transition-all duration-200 text-center ${statusColors[item.status]}`}
         >
           <StatusIcon size={13} />
-          {statusActionLabel}
+          <span className="truncate">{statusActionLabel}</span>
         </button>
 
         <button
           onClick={() => onDelete(item._id, item.name)}
-          className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-2 rounded-xl border-2 border-red-800/30 bg-red-900/20 text-red-400 hover:bg-red-900/40 transition-all duration-200 ml-auto"
+          className="inline-flex items-center justify-center gap-1 text-xs font-semibold px-3 py-2 rounded-xl border-2 border-red-800/30 bg-red-900/20 text-red-400 hover:bg-red-900/40 transition-all duration-200 sm:ml-auto"
           aria-label={`Delete ${item.name}`}
         >
           <Trash2 size={13} />

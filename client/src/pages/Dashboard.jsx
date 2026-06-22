@@ -135,7 +135,7 @@ const Dashboard = () => {
 
         {/* Filter tabs */}
         {items.length > 0 && (
-          <div className="flex gap-2 mb-6 flex-wrap">
+          <div className="grid grid-cols-2 sm:flex gap-2 mb-6 sm:flex-wrap">
             {['all', 'active', 'lost', 'recovered'].map(f => (
               <button
                 key={f}

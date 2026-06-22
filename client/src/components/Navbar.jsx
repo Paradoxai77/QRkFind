@@ -61,6 +61,13 @@ const Navbar = ({ unreadCount = 0 }) => {
                   )}
                 </span>
               </NavLink>
+              {user && (user.role === 'admin' || user.email === 'pratiknerpagar2@gmail.com') && (
+                <NavLink to="/admin" className={navLinkClass}>
+                  <span className="flex items-center gap-1.5 font-bold text-red-400">
+                    🛡️ Admin Panel
+                  </span>
+                </NavLink>
+              )}
             </nav>
           ) : (
             <nav className="hidden md:flex items-center gap-6">
@@ -143,6 +150,11 @@ const Navbar = ({ unreadCount = 0 }) => {
               <NavLink to="/dashboard/notifications" className={navLinkClass} onClick={() => setMobileOpen(false)}>
                 Notifications {unreadCount > 0 && `(${unreadCount})`}
               </NavLink>
+              {user && (user.role === 'admin' || user.email === 'pratiknerpagar2@gmail.com') && (
+                <NavLink to="/admin" className={navLinkClass} onClick={() => setMobileOpen(false)}>
+                  🛡️ Admin Panel
+                </NavLink>
+              )}
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-3 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 rounded-lg transition-colors mt-2"
