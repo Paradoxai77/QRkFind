@@ -8,56 +8,37 @@ import { ArrowLeft, MapPin, Phone, Mail, MessageSquare, Clock, User, CheckCircle
 import { formatDateTime, timeAgo } from '../utils/dateFormat'
 import toast from 'react-hot-toast'
 
-// Lazy-loaded map to avoid SSR issues
 let MapComponent = null
 
 const LocationMap = ({ lat, lng }) => {
   const [MapLib, setMapLib] = useState(null)
-
-  useEffect(() => {
-    import('react-leaflet').then(mod => setMapLib(mod)).catch(() => {})
-  }, [])
-
+  useEffect(() => { import('react-leaflet').then(mod => setMapLib(mod)).catch(() => {}) }, [])
   if (!MapLib) return (
-    <div className="h-48 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 text-sm">
+    <div className="h-48 rounded-xl flex items-center justify-center text-sm transition-colors" style={{ background: 'var(--bg-card-2, var(--bg-card))', color: 'var(--text-muted)' }}>
       Loading map...
     </div>
   )
-
   const { MapContainer, TileLayer, Marker, Popup } = MapLib
-
   return (
-    <MapContainer
-      center={[lat, lng]}
-      zoom={15}
-      className="h-48 w-full rounded-xl z-0"
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[lat, lng]}>
-        <Popup>Item found here</Popup>
-      </Marker>
+    <MapContainer center={[lat, lng]} zoom={15} className="h-48 w-full rounded-xl z-0" scrollWheelZoom={false}>
+      <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker position={[lat, lng]}><Popup>Item found here</Popup></Marker>
     </MapContainer>
   )
 }
 
 const ReportCard = ({ report }) => {
   const hasLocation = report.location?.lat && report.location?.lng
-
   return (
-    <div className="card p-5 animate-fade-in border-l-4 border-primary-400">
-      {/* Header */}
+    <div className="rounded-2xl p-5 animate-fade-in border-l-4 border-lime border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-            <User size={18} className="text-primary-600" />
+          <div className="w-10 h-10 bg-lime/10 rounded-xl flex items-center justify-center flex-shrink-0">
+            <User size={18} className="text-lime" />
           </div>
           <div>
-            <h4 className="font-display font-bold text-ink">{report.finderName}</h4>
-            <div className="flex items-center gap-1 text-xs text-slate-400 mt-0.5">
+            <h4 className="font-display font-bold dark:text-white text-dark">{report.finderName}</h4>
+            <div className="flex items-center gap-1 text-xs dark:text-white/40 text-dark/50 mt-0.5">
               <Clock size={11} />
               {timeAgo(report.createdAt)} · {formatDateTime(report.createdAt)}
             </div>
@@ -67,23 +48,19 @@ const ReportCard = ({ report }) => {
 
       {/* Contact info */}
       <div className="grid sm:grid-cols-2 gap-3 mb-4">
-        <div className="flex items-center gap-2.5 bg-slate-50 rounded-xl px-3 py-2.5">
-          <Phone size={14} className="text-primary-500 flex-shrink-0" />
+        <div className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors" style={{ background: 'var(--bg-card-2, var(--bg-card))' }}>
+          <Phone size={14} className="text-lime flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wide">Phone</p>
-            <a href={`tel:${report.finderPhone}`} className="text-sm font-semibold text-ink hover:text-primary-600 transition-colors">
-              {report.finderPhone}
-            </a>
+            <p className="text-[10px] dark:text-white/40 text-dark/40 font-semibold uppercase tracking-wide">Phone</p>
+            <a href={`tel:${report.finderPhone}`} className="text-sm font-semibold text-lime hover:underline">{report.finderPhone}</a>
           </div>
         </div>
         {report.finderEmail && (
-          <div className="flex items-center gap-2.5 bg-slate-50 rounded-xl px-3 py-2.5">
-            <Mail size={14} className="text-primary-500 flex-shrink-0" />
+          <div className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors" style={{ background: 'var(--bg-card-2, var(--bg-card))' }}>
+            <Mail size={14} className="text-lime flex-shrink-0" />
             <div>
-              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wide">Email</p>
-              <a href={`mailto:${report.finderEmail}`} className="text-sm font-semibold text-ink hover:text-primary-600 transition-colors truncate block">
-                {report.finderEmail}
-              </a>
+              <p className="text-[10px] dark:text-white/40 text-dark/40 font-semibold uppercase tracking-wide">Email</p>
+              <a href={`mailto:${report.finderEmail}`} className="text-sm font-semibold text-lime hover:underline truncate block">{report.finderEmail}</a>
             </div>
           </div>
         )}
@@ -91,9 +68,9 @@ const ReportCard = ({ report }) => {
 
       {/* Message */}
       {report.message && (
-        <div className="flex gap-2.5 bg-primary-50 rounded-xl px-4 py-3 mb-4">
-          <MessageSquare size={15} className="text-primary-500 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-slate-700 italic leading-relaxed">"{report.message}"</p>
+        <div className="flex gap-2.5 bg-lime/10 rounded-xl px-4 py-3 mb-4">
+          <MessageSquare size={15} className="text-lime flex-shrink-0 mt-0.5" />
+          <p className="text-sm dark:text-white/70 text-dark/60 italic leading-relaxed">"{report.message}"</p>
         </div>
       )}
 
@@ -101,23 +78,17 @@ const ReportCard = ({ report }) => {
       {hasLocation ? (
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <MapPin size={14} className="text-accent-500" />
-            <span className="text-xs font-semibold text-slate-600">GPS Location Shared</span>
-            <a
-              href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-primary-600 hover:underline font-semibold ml-auto"
-            >
+            <MapPin size={14} className="text-lime" />
+            <span className="text-xs font-semibold dark:text-white/60 text-dark/60">GPS Location Shared</span>
+            <a href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`} target="_blank" rel="noopener noreferrer" className="text-xs text-lime hover:underline font-semibold ml-auto">
               Open in Google Maps →
             </a>
           </div>
           <LocationMap lat={report.location.lat} lng={report.location.lng} />
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <MapPin size={13} />
-          Location not shared
+        <div className="flex items-center gap-2 text-xs dark:text-white/30 text-dark/40">
+          <MapPin size={13} /> Location not shared
         </div>
       )}
     </div>
@@ -159,16 +130,16 @@ const ItemDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface">
+      <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
         <Navbar />
         <div className="max-w-5xl mx-auto px-4 py-12">
           <div className="animate-pulse space-y-6">
-            <div className="h-8 bg-slate-200 rounded-xl w-48" />
+            <div className="h-8 bg-lime/10 rounded-xl w-48" />
             <div className="grid lg:grid-cols-2 gap-8">
-              <div className="h-96 bg-slate-200 rounded-2xl" />
+              <div className="h-96 bg-lime/10 rounded-2xl" />
               <div className="space-y-4">
-                <div className="h-48 bg-slate-200 rounded-2xl" />
-                <div className="h-32 bg-slate-200 rounded-2xl" />
+                <div className="h-48 bg-lime/10 rounded-2xl" />
+                <div className="h-32 bg-lime/10 rounded-2xl" />
               </div>
             </div>
           </div>
@@ -180,12 +151,12 @@ const ItemDetail = () => {
   if (!item) return null
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Back nav */}
         <div className="flex items-center gap-3 mb-8">
-          <button onClick={() => navigate('/dashboard')} className="btn-ghost p-2.5 border border-slate-200">
+          <button onClick={() => navigate('/dashboard')} className="btn-ghost p-2.5 border" style={{ borderColor: 'var(--border-color)' }}>
             <ArrowLeft size={18} />
           </button>
           <div className="flex-1 min-w-0">
@@ -194,7 +165,7 @@ const ItemDetail = () => {
               <h1 className="page-header mb-0">{item.name}</h1>
               <StatusBadge status={item.status} size="lg" />
             </div>
-            <p className="text-slate-500 text-sm mt-1 capitalize">
+            <p className="dark:text-white/40 text-dark/50 text-sm mt-1 capitalize">
               {item.category} · Added {new Date(item.createdAt).toLocaleDateString('en-US', { dateStyle: 'long' })}
             </p>
           </div>
@@ -206,44 +177,40 @@ const ItemDetail = () => {
             <QRCard itemId={item.itemId} itemName={item.name} category={item.category} />
 
             {/* Item details card */}
-            <div className="card p-6">
-              <h3 className="font-display font-bold text-ink mb-4">Item Details</h3>
+            <div className="rounded-2xl p-6 border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+              <h3 className="font-display font-bold dark:text-white text-dark mb-4">Item Details</h3>
               <dl className="space-y-3">
                 <div>
-                  <dt className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Item ID</dt>
-                  <dd className="font-mono text-sm text-slate-600 mt-0.5 break-all">{item.itemId}</dd>
+                  <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide">Item ID</dt>
+                  <dd className="font-mono text-sm dark:text-white/60 text-dark/60 mt-0.5 break-all">{item.itemId}</dd>
                 </div>
                 {item.description && (
                   <div>
-                    <dt className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Description</dt>
-                    <dd className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.description}</dd>
+                    <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide">Description</dt>
+                    <dd className="text-sm dark:text-white/60 text-dark/60 mt-0.5 leading-relaxed">{item.description}</dd>
                   </div>
                 )}
                 <div>
-                  <dt className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Public Found URL</dt>
-                  <dd className="text-xs font-mono text-primary-600 mt-0.5 break-all">
-                    {window.location.origin}/found/{item.itemId}
-                  </dd>
+                  <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide">Public Found URL</dt>
+                  <dd className="text-xs font-mono text-lime mt-0.5 break-all">{window.location.origin}/found/{item.itemId}</dd>
                 </div>
               </dl>
             </div>
 
             {/* Status actions */}
-            <div className="card p-5">
-              <h3 className="font-display font-bold text-ink mb-3">Change Status</h3>
+            <div className="rounded-2xl p-5 border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+              <h3 className="font-display font-bold dark:text-white text-dark mb-3">Change Status</h3>
               <div className="flex gap-2 flex-wrap">
                 {item.status !== 'active' && (
-                  <button onClick={() => handleStatusChange('active')} className="btn-ghost text-sm border border-slate-200">
-                    Set Active
-                  </button>
+                  <button onClick={() => handleStatusChange('active')} className="btn-ghost text-sm border" style={{ borderColor: 'var(--border-color)' }}>Set Active</button>
                 )}
                 {item.status !== 'lost' && (
-                  <button onClick={() => handleStatusChange('lost')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-warn-50 text-warn-600 border border-warn-200 hover:bg-warn-100 transition-colors">
+                  <button onClick={() => handleStatusChange('lost')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-orange-900/20 text-orange-400 border border-orange-700/30 hover:bg-orange-900/30 transition-colors">
                     <AlertTriangle size={14} /> Mark as Lost
                   </button>
                 )}
                 {item.status !== 'recovered' && (
-                  <button onClick={() => handleStatusChange('recovered')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-accent-50 text-accent-600 border border-accent-200 hover:bg-accent-100 transition-colors">
+                  <button onClick={() => handleStatusChange('recovered')} className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl bg-lime/10 text-lime border border-lime/20 hover:bg-lime/20 transition-colors">
                     <CheckCircle size={14} /> Mark Recovered
                   </button>
                 )}
@@ -254,29 +221,23 @@ const ItemDetail = () => {
           {/* Right: Found reports */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-xl font-bold text-ink">
+              <h2 className="font-display text-xl font-bold dark:text-white text-dark">
                 Found Reports
                 {reports.length > 0 && (
-                  <span className="ml-2 text-sm font-semibold bg-primary-100 text-primary-700 px-2.5 py-0.5 rounded-full">
-                    {reports.length}
-                  </span>
+                  <span className="ml-2 text-sm font-semibold bg-lime/15 text-lime px-2.5 py-0.5 rounded-full">{reports.length}</span>
                 )}
               </h2>
             </div>
 
             {reports.length === 0 ? (
-              <div className="card p-10 text-center">
+              <div className="rounded-2xl p-10 text-center border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
                 <div className="text-5xl mb-3">📭</div>
-                <h3 className="font-display font-bold text-ink mb-1">No reports yet</h3>
-                <p className="text-sm text-slate-500">
-                  When someone scans this item's QR code and submits a report, it will appear here.
-                </p>
+                <h3 className="font-display font-bold dark:text-white text-dark mb-1">No reports yet</h3>
+                <p className="text-sm dark:text-white/40 text-dark/50">When someone scans this item's QR code and submits a report, it will appear here.</p>
               </div>
             ) : (
               <div className="space-y-4">
-                {reports.map(report => (
-                  <ReportCard key={report._id} report={report} />
-                ))}
+                {reports.map(report => <ReportCard key={report._id} report={report} />)}
               </div>
             )}
           </div>

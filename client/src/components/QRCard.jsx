@@ -16,14 +16,10 @@ const QRCard = ({ itemId, itemName, category }) => {
 
   useEffect(() => {
     if (!canvasRef.current || !itemId) return
-
     QRCode.toCanvas(canvasRef.current, publicUrl, {
       width: 200,
       margin: 2,
-      color: {
-        dark: '#0F172A',
-        light: '#FFFFFF',
-      },
+      color: { dark: '#0F172A', light: '#FFFFFF' },
       errorCorrectionLevel: 'H',
     }).then(() => {
       setQrDataUrl(canvasRef.current.toDataURL('image/png'))
@@ -42,10 +38,7 @@ const QRCard = ({ itemId, itemName, category }) => {
   const handlePrint = () => {
     if (!qrDataUrl) return
     const win = window.open('', '_blank')
-    if (!win) {
-      toast.error('Popup window blocked! Please allow popups to print labels.')
-      return
-    }
+    if (!win) { toast.error('Popup window blocked! Please allow popups to print labels.'); return }
     win.document.write(`
       <!DOCTYPE html>
       <html>
@@ -54,7 +47,7 @@ const QRCard = ({ itemId, itemName, category }) => {
           <style>
             body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fff; }
             .label { text-align: center; border: 2px solid #E2E8F0; border-radius: 16px; padding: 24px; width: 260px; }
-            .brand { font-size: 13px; font-weight: 700; color: #2563EB; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+            .brand { font-size: 13px; font-weight: 700; color: #191A23; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
             img { width: 180px; height: 180px; display: block; margin: 0 auto 12px; }
             .item-name { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 4px; }
             .subtitle { font-size: 11px; color: #94A3B8; }
@@ -76,16 +69,16 @@ const QRCard = ({ itemId, itemName, category }) => {
   }
 
   return (
-    <div className="card p-6 flex flex-col items-center text-center">
-      {/* QR code label header */}
+    <div className="rounded-2xl p-6 flex flex-col items-center text-center border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+      {/* Header */}
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-          <QrCode size={16} className="text-white" />
+        <div className="w-8 h-8 bg-lime rounded-lg flex items-center justify-center">
+          <QrCode size={16} className="text-dark" />
         </div>
-        <span className="font-display font-bold text-slate-700">QR Code</span>
+        <span className="font-display font-bold dark:text-white text-dark">QR Code</span>
       </div>
 
-      {/* Canvas */}
+      {/* Canvas — always white background for scannability */}
       <div className="p-4 bg-white border-2 border-slate-100 rounded-2xl shadow-inner mb-4">
         <canvas ref={canvasRef} className="rounded-lg" />
       </div>
@@ -93,24 +86,16 @@ const QRCard = ({ itemId, itemName, category }) => {
       {/* Item label */}
       <div className="mb-5">
         <p className="text-2xl mb-1">{CATEGORY_ICONS[category] || '📦'}</p>
-        <p className="font-display font-bold text-ink text-lg leading-tight">{itemName}</p>
-        <p className="text-xs text-slate-400 mt-1 font-mono break-all px-4">{itemId}</p>
+        <p className="font-display font-bold dark:text-white text-dark text-lg leading-tight">{itemName}</p>
+        <p className="text-xs dark:text-white/30 text-dark/40 mt-1 font-mono break-all px-4">{itemId}</p>
       </div>
 
       {/* Actions */}
       <div className="flex gap-3 w-full">
-        <button
-          onClick={handleDownload}
-          disabled={!qrDataUrl}
-          className="btn-primary flex-1 text-sm py-2.5"
-        >
+        <button onClick={handleDownload} disabled={!qrDataUrl} className="btn-primary flex-1 text-sm py-2.5">
           <Download size={15} /> Download PNG
         </button>
-        <button
-          onClick={handlePrint}
-          disabled={!qrDataUrl}
-          className="btn-secondary flex-1 text-sm py-2.5"
-        >
+        <button onClick={handlePrint} disabled={!qrDataUrl} className="btn-secondary flex-1 text-sm py-2.5">
           <Printer size={15} /> Print Label
         </button>
       </div>

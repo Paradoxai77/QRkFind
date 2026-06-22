@@ -1,10 +1,12 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import { useState } from 'react'
-import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Scan } from 'lucide-react'
+import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Scan, Sun, Moon } from 'lucide-react'
 
 const Navbar = ({ unreadCount = 0 }) => {
   const { user, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -18,11 +20,11 @@ const Navbar = ({ unreadCount = 0 }) => {
     `font-medium text-sm transition-colors px-3 py-2 rounded-lg nav-link-hover ${
       isActive
         ? 'text-lime'
-        : 'text-white/70 hover:text-lime'
+        : 'dark:text-white/70 dark:hover:text-lime text-dark/60 hover:text-lime'
     }`
 
   return (
-    <header className="sticky top-0 z-40 bg-dark/90 backdrop-blur-md border-b border-white/8">
+    <header className="sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-300" style={{ background: 'var(--bg-nav)', borderColor: 'var(--border-color)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -30,8 +32,8 @@ const Navbar = ({ unreadCount = 0 }) => {
             <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark shadow-lime-glow group-hover:shadow-none transition-all">
               <Scan size={20} />
             </div>
-            <span className="text-xl font-bold text-white group-hover:text-lime transition-colors">
-              Find<span className="text-lime group-hover:text-white transition-colors">It</span>
+            <span className="text-xl font-bold dark:text-white text-dark group-hover:text-lime transition-colors">
+              Find<span className="text-lime group-hover:text-dark dark:group-hover:text-white transition-colors">It</span>
             </span>
           </Link>
 
@@ -71,45 +73,66 @@ const Navbar = ({ unreadCount = 0 }) => {
             </nav>
           )}
 
-          {/* User menu (desktop) */}
-          {user && (
-            <div className="hidden md:flex items-center gap-3">
-              <div className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-3 py-2">
-                <div className="w-7 h-7 bg-lime rounded-full flex items-center justify-center text-dark text-xs font-bold">
-                  {user.name.charAt(0).toUpperCase()}
+          {/* Theme toggle + User menu (desktop) */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              id="theme-toggle-btn"
+              onClick={toggleTheme}
+              className="theme-toggle"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+
+            {user && (
+              <>
+                <div className="flex items-center gap-2.5 rounded-xl px-3 py-2 border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <div className="w-7 h-7 bg-lime rounded-full flex items-center justify-center text-dark text-xs font-bold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-sm font-semibold dark:text-white text-dark max-w-[100px] truncate">
+                    {user.name}
+                  </span>
                 </div>
-                <span className="text-sm font-semibold text-white max-w-[100px] truncate">
-                  {user.name}
-                </span>
-              </div>
-              <button onClick={handleLogout} className="btn-ghost text-sm py-2 px-3 text-red-400 hover:bg-red-900/20 hover:text-red-400">
-                <LogOut size={15} />
-                Sign Out
-              </button>
-            </div>
-          )}
+                <button onClick={handleLogout} className="btn-ghost text-sm py-2 px-3 text-red-400 hover:bg-red-900/20 hover:text-red-400">
+                  <LogOut size={15} />
+                  Sign Out
+                </button>
+              </>
+            )}
+          </div>
 
           {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-xl text-white/70 hover:bg-white/10 hover:text-lime transition-colors"
-            onClick={() => setMobileOpen(o => !o)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <button
+              className="p-2 rounded-xl dark:text-white/70 text-dark/60 hover:bg-lime/10 hover:text-lime transition-colors"
+              onClick={() => setMobileOpen(o => !o)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-dark border-t border-white/8 px-4 py-4 space-y-1 animate-fade-in">
+        <div className="md:hidden border-t transition-colors duration-300 px-4 py-4 space-y-1 animate-fade-in" style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-color)' }}>
           {user ? (
             <>
-              <div className="flex items-center gap-2.5 mb-3 pb-3 border-b border-white/8">
+              <div className="flex items-center gap-2.5 mb-3 pb-3 border-b" style={{ borderColor: 'var(--border-color)' }}>
                 <div className="w-8 h-8 bg-lime rounded-full flex items-center justify-center text-dark font-bold">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-                <span className="font-semibold text-white">{user.name}</span>
+                <span className="font-semibold dark:text-white text-dark">{user.name}</span>
               </div>
               <NavLink to="/dashboard" className={navLinkClass} end onClick={() => setMobileOpen(false)}>
                 Dashboard
@@ -129,7 +152,7 @@ const Navbar = ({ unreadCount = 0 }) => {
             </>
           ) : (
             <>
-              <Link to="/login" className="block px-3 py-2 text-sm font-medium text-white/70 hover:text-lime hover:bg-white/5 rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
+              <Link to="/login" className="block px-3 py-2 text-sm font-medium dark:text-white/70 text-dark/60 hover:text-lime hover:bg-lime/5 rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
                 Sign In
               </Link>
               <Link to="/register" className="block btn-primary text-center text-sm mt-2" onClick={() => setMobileOpen(false)}>

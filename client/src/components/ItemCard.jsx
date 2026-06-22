@@ -31,30 +31,33 @@ const ItemCard = ({ item, onDelete, onStatusChange }) => {
 
   const statusColors = {
     active: 'bg-lime/10 text-lime border-lime/20 hover:bg-lime/20',
-    lost: 'bg-orange-900/20 text-orange-400 border-orange-800/30 hover:bg-orange-900/30',
-    recovered: 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10',
+    lost: 'bg-orange-900/20 text-orange-500 border-orange-400/30 hover:bg-orange-900/30',
+    recovered: 'dark:bg-white/5 bg-dark/5 dark:text-white/60 text-dark/50 dark:border-white/10 border-dark/10 dark:hover:bg-white/10 hover:bg-dark/10',
   }
 
   return (
-    <div className="bg-card-dark border-2 border-white/8 rounded-2xl p-5 group animate-fade-in hover:-translate-y-1 hover:border-lime/20 transition-all duration-300 card-glow">
+    <div
+      className="border-2 rounded-2xl p-5 group animate-fade-in hover:-translate-y-1 transition-all duration-300 card-glow"
+      style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+    >
       {/* Top row */}
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 bg-lime/10 border border-lime/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 group-hover:bg-lime/20 transition-all duration-300">
           {icon}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-display font-bold text-white text-base leading-tight truncate">
+          <h3 className="font-display font-bold dark:text-white text-dark text-base leading-tight truncate">
             {item.name}
           </h3>
-          <p className="text-xs text-white/40 mt-0.5 capitalize">{item.category}</p>
-          <p className="text-xs text-white/25 mt-1">{format(item.createdAt)}</p>
+          <p className="text-xs dark:text-white/40 text-dark/50 mt-0.5 capitalize">{item.category}</p>
+          <p className="text-xs dark:text-white/25 text-dark/30 mt-1">{format(item.createdAt)}</p>
         </div>
         <StatusBadge status={item.status} />
       </div>
 
       {/* Description */}
       {item.description && (
-        <p className="text-sm text-white/40 mb-4 line-clamp-2 leading-relaxed">
+        <p className="text-sm dark:text-white/40 text-dark/50 mb-4 line-clamp-2 leading-relaxed">
           {item.description}
         </p>
       )}

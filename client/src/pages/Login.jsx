@@ -33,9 +33,9 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-dark flex">
+    <div className="min-h-screen flex transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
       {/* Left panel — decorative (Positivus style) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-card-dark flex-col justify-center items-center p-12 relative overflow-hidden border-r border-white/8">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative overflow-hidden border-r transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
         {/* Decorative circles */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <div className="absolute top-1/4 -left-20 w-64 h-64 bg-lime/5 rounded-full blur-3xl" />
@@ -56,11 +56,11 @@ const Login = () => {
             <div className="w-12 h-12 bg-lime rounded-2xl flex items-center justify-center text-dark">
               <Scan size={26} />
             </div>
-            <span className="font-display text-3xl font-bold text-white">FindIt</span>
+            <span className="font-display text-3xl font-bold dark:text-white text-dark">FindIt</span>
           </Link>
 
-          <h1 className="font-display text-3xl font-bold text-white mb-4">Welcome Back</h1>
-          <p className="text-white/40 text-base max-w-xs mx-auto leading-relaxed mb-10">
+          <h1 className="font-display text-3xl font-bold dark:text-white text-dark mb-4">Welcome Back</h1>
+          <p className="dark:text-white/40 text-dark/50 text-base max-w-xs mx-auto leading-relaxed mb-10">
             Your belongings are waiting. Sign in to manage your registered items and check alerts.
           </p>
 
@@ -75,20 +75,20 @@ const Login = () => {
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 bg-dark">
+      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors" style={{ background: 'var(--bg-surface)' }}>
         <div className="w-full max-w-md">
           {/* Logo for mobile */}
           <Link to="/" className="flex items-center gap-2.5 mb-8 lg:hidden">
             <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark">
               <Scan size={20} />
             </div>
-            <span className="font-display text-xl font-bold text-white">FindIt</span>
+            <span className="font-display text-xl font-bold dark:text-white text-dark">FindIt</span>
           </Link>
 
           <div className="mb-8">
             <span className="section-tag mb-4 inline-block">Sign In</span>
-            <h2 className="font-display text-3xl font-bold text-white mb-2">Welcome back</h2>
-            <p className="text-white/40">
+            <h2 className="font-display text-3xl font-bold dark:text-white text-dark mb-2">Welcome back</h2>
+            <p className="dark:text-white/40 text-dark/50">
               Don't have an account?{' '}
               <Link to="/register" className="text-lime font-semibold hover:text-lime-dark transition-colors">
                 Register here
@@ -109,7 +109,7 @@ const Login = () => {
             <div>
               <label htmlFor="email" className="input-label">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30" />
                 <input
                   id="email"
                   name="email"
@@ -133,7 +133,7 @@ const Login = () => {
                 </button>
               </div>
               <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30" />
                 <input
                   id="password"
                   name="password"
@@ -148,7 +148,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(s => !s)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-lime transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30 hover:text-lime transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}

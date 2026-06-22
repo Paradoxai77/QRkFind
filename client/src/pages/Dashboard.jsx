@@ -10,21 +10,21 @@ import toast from 'react-hot-toast'
 
 const StatCard = ({ icon, label, value, variant = 'dark' }) => {
   const isLime = variant === 'lime'
-  const isLight = variant === 'light'
   return (
-    <div className={`rounded-2xl p-5 flex items-center gap-4 border-2 transition-all hover:-translate-y-1 duration-300 ${
-      isLime ? 'bg-lime border-lime' :
-      isLight ? 'bg-card-light border-black/10' :
-      'bg-card-dark border-white/10'
-    }`}>
+    <div
+      className={`rounded-2xl p-5 flex items-center gap-4 border-2 transition-all hover:-translate-y-1 duration-300 ${
+        isLime ? 'bg-lime border-lime' : 'border-2'
+      }`}
+      style={!isLime ? { background: 'var(--bg-card)', borderColor: 'var(--border-color)' } : {}}
+    >
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
         isLime ? 'bg-dark text-lime' : 'bg-lime/10 text-lime'
       }`}>
         {icon}
       </div>
       <div>
-        <div className={`text-2xl font-bold font-display ${isLime ? 'text-dark' : 'text-white'}`}>{value}</div>
-        <div className={`text-xs font-medium ${isLime ? 'text-dark/60' : 'text-white/40'}`}>{label}</div>
+        <div className={`text-2xl font-bold font-display ${isLime ? 'text-dark' : 'dark:text-white text-dark'}`}>{value}</div>
+        <div className={`text-xs font-medium ${isLime ? 'text-dark/60' : 'dark:text-white/40 text-dark/50'}`}>{label}</div>
       </div>
     </div>
   )
@@ -92,7 +92,7 @@ const Dashboard = () => {
   const filtered = filter === 'all' ? items : items.filter(i => i.status === filter)
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
       <Navbar unreadCount={unreadCount} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -100,10 +100,10 @@ const Dashboard = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <span className="section-tag mb-3 inline-block">Dashboard</span>
-            <h1 className="font-display text-3xl font-bold text-white">
+            <h1 className="font-display text-3xl font-bold dark:text-white text-dark">
               Hi, {user?.name?.split(' ')[0]} 👋
             </h1>
-            <p className="text-white/40 mt-1">
+            <p className="dark:text-white/40 text-dark/50 mt-1">
               {items.length === 0
                 ? "You haven't added any items yet."
                 : `Managing ${items.length} item${items.length !== 1 ? 's' : ''}`}
@@ -143,7 +143,7 @@ const Dashboard = () => {
                 className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 capitalize border-2 ${
                   filter === f
                     ? 'bg-lime text-dark border-lime'
-                    : 'bg-transparent text-white/60 border-white/10 hover:border-lime/40 hover:text-lime'
+                    : 'bg-transparent dark:text-white/60 text-dark/60 dark:border-white/10 border-dark/10 hover:border-lime/40 hover:text-lime'
                 }`}
               >
                 {f === 'all' ? `All (${stats.total})` : `${f.charAt(0).toUpperCase() + f.slice(1)} (${stats[f]})`}
@@ -156,12 +156,12 @@ const Dashboard = () => {
         {loading ? (
           <SkeletonGrid count={3} />
         ) : filtered.length === 0 ? (
-          <div className="bg-card-dark border-2 border-white/10 rounded-3xl p-16 text-center">
+          <div className="border-2 rounded-3xl p-16 text-center transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
             <div className="text-6xl mb-4">{items.length === 0 ? '📦' : '🔍'}</div>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
+            <h3 className="font-display text-xl font-bold dark:text-white text-dark mb-2">
               {items.length === 0 ? 'No items yet' : `No ${filter} items`}
             </h3>
-            <p className="text-white/40 mb-6">
+            <p className="dark:text-white/40 text-dark/50 mb-6">
               {items.length === 0
                 ? "Add your first item to generate a QR code and start protecting it."
                 : "Change the filter to see other items."}
