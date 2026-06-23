@@ -18,7 +18,7 @@ const StatCard = ({ icon, label, value, variant = 'dark' }) => {
       style={!isLime ? { background: 'var(--bg-card)', borderColor: 'var(--border-color)' } : {}}
     >
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-        isLime ? 'bg-dark text-lime' : 'bg-lime/10 text-lime'
+        isLime ? 'bg-dark text-lime' : 'bg-lime-theme-light text-lime-theme'
       }`}>
         {icon}
       </div>
@@ -110,7 +110,7 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/dashboard/notifications" className="relative btn-ghost px-4 py-2.5 text-sm border border-white/10">
+            <Link to="/dashboard/notifications" className="relative btn-ghost px-4 py-2.5 text-sm border" style={{ borderColor: 'var(--border-color)' }}>
               <Bell size={16} />
               Alerts
               {unreadCount > 0 && (
@@ -143,7 +143,7 @@ const Dashboard = () => {
                 className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 capitalize border-2 ${
                   filter === f
                     ? 'bg-lime text-dark border-lime'
-                    : 'bg-transparent dark:text-white/60 text-dark/60 dark:border-white/10 border-dark/10 hover:border-lime/40 hover:text-lime'
+                    : 'bg-transparent dark:text-white/60 text-dark/60 dark:border-white/10 border-dark/10 hover:border-lime/40 hover:text-lime-theme'
                 }`}
               >
                 {f === 'all' ? `All (${stats.total})` : `${f.charAt(0).toUpperCase() + f.slice(1)} (${stats[f]})`}

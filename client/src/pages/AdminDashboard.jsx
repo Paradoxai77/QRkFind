@@ -148,7 +148,8 @@ const AdminDashboard = () => {
           <button
             onClick={fetchData}
             disabled={loading}
-            className="btn-ghost self-start md:self-auto border border-white/10 flex items-center gap-2"
+            className="btn-ghost self-start md:self-auto border flex items-center gap-2"
+            style={{ borderColor: 'var(--border-color)' }}
           >
             <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
             Refresh Data
@@ -170,7 +171,7 @@ const AdminDashboard = () => {
 
           {/* Total Items */}
           <div className="rounded-2xl p-5 flex items-center gap-4 border-2 transition-all duration-300" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-lime/10 text-lime">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-lime-theme-light text-lime-theme">
               <Package size={20} />
             </div>
             <div>
@@ -217,7 +218,7 @@ const AdminDashboard = () => {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'bg-lime text-dark shadow-sm'
-                    : 'bg-transparent dark:text-white/60 text-dark/60 hover:text-lime'
+                    : 'bg-transparent dark:text-white/60 text-dark/60 hover:text-lime-theme'
                 }`}
               >
                 {tab.icon}
@@ -281,7 +282,7 @@ const AdminDashboard = () => {
                           <td className="p-4 font-mono dark:text-white/60 text-dark/60">{u.email}</td>
                           <td className="p-4">
                             <span className={`inline-flex px-2 py-0.5 text-xs font-bold rounded ${
-                              u.role === 'admin' ? 'bg-red-900/30 text-red-400 border border-red-800/30' : 'bg-lime/10 text-lime border border-lime/10'
+                              u.role === 'admin' ? 'bg-red-900/30 text-red-400 border border-red-800/30' : 'bg-lime-theme-light text-lime-theme border border-lime-theme'
                             }`}>
                               {u.role}
                             </span>
@@ -328,9 +329,9 @@ const AdminDashboard = () => {
                     ) : (
                       filteredItems.map(i => (
                         <tr key={i._id} className="hover:bg-white/5 transition-colors">
-                          <td className="p-4 font-mono text-xs dark:text-lime text-lime select-all flex items-center gap-1.5">
+                          <td className="p-4 font-mono text-xs text-lime-theme select-all flex items-center gap-1.5">
                             {i.itemId}
-                            <a href={`/found/${i.itemId}`} target="_blank" rel="noreferrer" title="Open Public Finder Page" className="hover:scale-110 text-lime/70 hover:text-lime transition-all">
+                            <a href={`/found/${i.itemId}`} target="_blank" rel="noreferrer" title="Open Public Finder Page" className="hover:scale-110 text-lime-theme/70 hover:text-lime-theme transition-all">
                               <ExternalLink size={12} />
                             </a>
                           </td>
@@ -405,7 +406,7 @@ const AdminDashboard = () => {
                                   href={`https://www.google.com/maps?q=${r.location.lat},${r.location.lng}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-xs text-lime font-semibold hover:underline"
+                                  className="inline-flex items-center gap-1 text-xs text-lime-theme font-semibold hover:underline"
                                 >
                                   <MapPin size={12} /> Yes (View Maps)
                                 </a>
@@ -492,7 +493,8 @@ const AdminDashboard = () => {
               <button
                 onClick={closeDeleteModal}
                 disabled={deleting}
-                className="btn-ghost flex-1 py-3 text-sm border font-semibold border-white/10 hover:bg-white/5"
+                className="btn-ghost flex-1 py-3 text-sm border font-semibold"
+                style={{ borderColor: 'var(--border-color)' }}
               >
                 Cancel
               </button>

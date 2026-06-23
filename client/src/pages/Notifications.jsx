@@ -41,8 +41,8 @@ const Notifications = () => {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 bg-lime/15 rounded-xl flex items-center justify-center">
-            <Bell size={20} className="text-lime" />
+          <div className="w-10 h-10 bg-lime-theme-light rounded-xl flex items-center justify-center">
+            <Bell size={20} className="text-lime-theme" />
           </div>
           <div>
             <h1 className="page-header mb-0">Notifications</h1>
@@ -119,7 +119,7 @@ const Notifications = () => {
                   </div>
                   <Link
                     to={`/dashboard/item/${report.item?._id}`}
-                    className="flex items-center gap-1.5 text-xs text-lime font-semibold hover:underline flex-shrink-0"
+                    className="flex items-center gap-1.5 text-xs text-lime-theme font-semibold hover:underline flex-shrink-0"
                   >
                     View <ExternalLink size={11} />
                   </Link>
@@ -139,7 +139,7 @@ const Notifications = () => {
                       <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Phone size={11} className="text-blue-600" />
                       </div>
-                      <a href={`tel:${report.finderPhone}`} className="text-lime font-semibold hover:underline">
+                      <a href={`tel:${report.finderPhone}`} className="text-lime-theme font-semibold hover:underline">
                         {report.finderPhone}
                       </a>
                     </div>
@@ -148,21 +148,21 @@ const Notifications = () => {
                         <div className="w-6 h-6 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
                           <Mail size={11} className="text-purple-600" />
                         </div>
-                        <a href={`mailto:${report.finderEmail}`} className="text-lime font-semibold hover:underline truncate">
+                        <a href={`mailto:${report.finderEmail}`} className="text-lime-theme font-semibold hover:underline truncate">
                           {report.finderEmail}
                         </a>
                       </div>
                     )}
                     {report.location?.lat && (
                       <div className="flex items-center gap-2 text-sm">
-                        <div className="w-6 h-6 bg-lime/15 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <MapPin size={11} className="text-lime" />
+                        <div className="w-6 h-6 bg-lime-theme-light rounded-lg flex items-center justify-center flex-shrink-0">
+                          <MapPin size={11} className="text-lime-theme" />
                         </div>
                         <a
                           href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-lime font-semibold hover:underline"
+                          className="text-lime-theme font-semibold hover:underline"
                         >
                           View on Maps
                         </a>

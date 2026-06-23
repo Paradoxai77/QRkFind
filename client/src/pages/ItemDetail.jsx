@@ -33,8 +33,8 @@ const ReportCard = ({ report }) => {
     <div className="rounded-2xl p-5 animate-fade-in border-l-4 border-lime border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-lime/10 rounded-xl flex items-center justify-center flex-shrink-0">
-            <User size={18} className="text-lime" />
+          <div className="w-10 h-10 bg-lime-theme-light rounded-xl flex items-center justify-center flex-shrink-0">
+            <User size={18} className="text-lime-theme" />
           </div>
           <div>
             <h4 className="font-display font-bold dark:text-white text-dark">{report.finderName}</h4>
@@ -49,18 +49,18 @@ const ReportCard = ({ report }) => {
       {/* Contact info */}
       <div className="grid sm:grid-cols-2 gap-3 mb-4">
         <div className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors" style={{ background: 'var(--bg-card-2, var(--bg-card))' }}>
-          <Phone size={14} className="text-lime flex-shrink-0" />
+          <Phone size={14} className="text-lime-theme flex-shrink-0" />
           <div>
             <p className="text-[10px] dark:text-white/40 text-dark/40 font-semibold uppercase tracking-wide">Phone</p>
-            <a href={`tel:${report.finderPhone}`} className="text-sm font-semibold text-lime hover:underline">{report.finderPhone}</a>
+            <a href={`tel:${report.finderPhone}`} className="text-sm font-semibold text-lime-theme hover:underline">{report.finderPhone}</a>
           </div>
         </div>
         {report.finderEmail && (
           <div className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors" style={{ background: 'var(--bg-card-2, var(--bg-card))' }}>
-            <Mail size={14} className="text-lime flex-shrink-0" />
+            <Mail size={14} className="text-lime-theme flex-shrink-0" />
             <div>
               <p className="text-[10px] dark:text-white/40 text-dark/40 font-semibold uppercase tracking-wide">Email</p>
-              <a href={`mailto:${report.finderEmail}`} className="text-sm font-semibold text-lime hover:underline truncate block">{report.finderEmail}</a>
+              <a href={`mailto:${report.finderEmail}`} className="text-sm font-semibold text-lime-theme hover:underline truncate block">{report.finderEmail}</a>
             </div>
           </div>
         )}
@@ -68,8 +68,8 @@ const ReportCard = ({ report }) => {
 
       {/* Message */}
       {report.message && (
-        <div className="flex gap-2.5 bg-lime/10 rounded-xl px-4 py-3 mb-4">
-          <MessageSquare size={15} className="text-lime flex-shrink-0 mt-0.5" />
+        <div className="flex gap-2.5 bg-lime-theme-light rounded-xl px-4 py-3 mb-4">
+          <MessageSquare size={15} className="text-lime-theme flex-shrink-0 mt-0.5" />
           <p className="text-sm dark:text-white/70 text-dark/60 italic leading-relaxed">"{report.message}"</p>
         </div>
       )}
@@ -78,9 +78,9 @@ const ReportCard = ({ report }) => {
       {hasLocation ? (
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <MapPin size={14} className="text-lime" />
+            <MapPin size={14} className="text-lime-theme" />
             <span className="text-xs font-semibold dark:text-white/60 text-dark/60">GPS Location Shared</span>
-            <a href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`} target="_blank" rel="noopener noreferrer" className="text-xs text-lime hover:underline font-semibold ml-auto">
+            <a href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`} target="_blank" rel="noopener noreferrer" className="text-xs text-lime-theme hover:underline font-semibold ml-auto">
               Open in Google Maps →
             </a>
           </div>
@@ -192,14 +192,14 @@ const ItemDetail = () => {
                 )}
                 <div>
                   <dt className="text-xs font-semibold dark:text-white/40 text-dark/40 uppercase tracking-wide mb-1.5">Public Found URL</dt>
-                  <dd className="flex items-center gap-2 bg-lime/5 dark:bg-white/5 border border-lime/20 dark:border-white/10 rounded-xl p-2.5 pl-3">
-                    <span className="text-xs font-mono text-lime truncate flex-1 select-all">{window.location.origin}/found/{item.itemId}</span>
+                  <dd className="flex items-center gap-2 bg-lime-theme-light border border-lime-theme rounded-xl p-2.5 pl-3">
+                    <span className="text-xs font-mono text-lime-theme truncate flex-1 select-all">{window.location.origin}/found/{item.itemId}</span>
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(`${window.location.origin}/found/${item.itemId}`);
                         toast.success('Public URL copied! 📋');
                       }}
-                      className="btn-ghost p-1.5 rounded-lg border-2 border-lime/30 text-lime hover:bg-lime hover:text-dark transition-all duration-200 text-xs font-semibold flex items-center justify-center flex-shrink-0"
+                      className="btn-ghost p-1.5 rounded-lg border-2 border-lime-theme text-lime-theme hover:bg-lime hover:text-dark transition-all duration-200 text-xs font-semibold flex items-center justify-center flex-shrink-0"
                       title="Copy URL"
                     >
                       <Copy size={14} />
@@ -222,7 +222,7 @@ const ItemDetail = () => {
                   </button>
                 )}
                 {item.status !== 'recovered' && (
-                  <button onClick={() => handleStatusChange('recovered')} className="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-lime/10 text-lime border border-lime/20 hover:bg-lime/20 transition-colors">
+                  <button onClick={() => handleStatusChange('recovered')} className="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-lime-theme-light text-lime-theme border border-lime/20 hover:bg-lime/20 transition-colors">
                     <CheckCircle size={14} /> Mark Recovered
                   </button>
                 )}
@@ -236,7 +236,7 @@ const ItemDetail = () => {
               <h2 className="font-display text-xl font-bold dark:text-white text-dark">
                 Found Reports
                 {reports.length > 0 && (
-                  <span className="ml-2 text-sm font-semibold bg-lime/15 text-lime px-2.5 py-0.5 rounded-full">{reports.length}</span>
+                  <span className="ml-2 text-sm font-semibold bg-lime-theme-light text-lime-theme px-2.5 py-0.5 rounded-full">{reports.length}</span>
                 )}
               </h2>
             </div>

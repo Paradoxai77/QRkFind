@@ -19,8 +19,8 @@ const Navbar = ({ unreadCount = 0 }) => {
   const navLinkClass = ({ isActive }) =>
     `font-medium text-sm transition-colors px-3 py-2 rounded-lg nav-link-hover ${
       isActive
-        ? 'text-lime'
-        : 'dark:text-white/70 dark:hover:text-lime text-dark/60 hover:text-lime'
+        ? 'text-lime-theme'
+        : 'dark:text-white/70 dark:hover:text-lime-theme text-dark/60 hover:text-lime-theme'
     }`
 
   return (
@@ -32,8 +32,8 @@ const Navbar = ({ unreadCount = 0 }) => {
             <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark shadow-lime-glow group-hover:shadow-none transition-all">
               <Scan size={20} />
             </div>
-            <span className="text-xl font-bold dark:text-white text-dark group-hover:text-lime transition-colors">
-              Find<span className="text-lime group-hover:text-dark dark:group-hover:text-white transition-colors">It</span>
+            <span className="text-xl font-bold dark:text-white text-dark group-hover:text-lime-theme transition-colors">
+              Find<span className="text-lime-theme group-hover:text-dark dark:group-hover:text-white transition-colors">It</span>
             </span>
           </Link>
 
@@ -71,7 +71,7 @@ const Navbar = ({ unreadCount = 0 }) => {
             </nav>
           ) : (
             <nav className="hidden md:flex items-center gap-6">
-              <Link to="/login" className="text-sm font-medium text-white/70 hover:text-lime transition-colors nav-link-hover">
+              <Link to="/login" className="text-sm font-medium dark:text-white/70 text-dark/70 hover:text-lime-theme transition-colors nav-link-hover">
                 Sign In
               </Link>
               <Link to="/register" className="btn-primary text-sm py-2 px-5 rounded-xl">
@@ -120,7 +120,7 @@ const Navbar = ({ unreadCount = 0 }) => {
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <button
-              className="p-2 rounded-xl dark:text-white/70 text-dark/60 hover:bg-lime/10 hover:text-lime transition-colors"
+              className="p-2 rounded-xl dark:text-white/70 text-dark/60 hover:bg-lime-theme-light hover:text-lime-theme transition-colors"
               onClick={() => setMobileOpen(o => !o)}
               aria-label="Toggle menu"
             >
@@ -164,7 +164,7 @@ const Navbar = ({ unreadCount = 0 }) => {
             </>
           ) : (
             <>
-              <Link to="/login" className="block px-3 py-2 text-sm font-medium dark:text-white/70 text-dark/60 hover:text-lime hover:bg-lime/5 rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
+              <Link to="/login" className="block px-3 py-2 text-sm font-medium dark:text-white/70 text-dark/60 hover:text-lime-theme hover:bg-lime-theme-light rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
                 Sign In
               </Link>
               <Link to="/register" className="block btn-primary text-center text-sm mt-2" onClick={() => setMobileOpen(false)}>

@@ -72,11 +72,19 @@
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 bg-transparent text-white font-semibold px-6 py-3 rounded-xl border-2 border-white transition-all duration-200 hover:border-lime hover:text-lime hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center gap-2 bg-transparent text-dark dark:text-white font-semibold px-6 py-3 rounded-xl border-2 border-dark dark:border-white transition-all duration-200 hover:-translate-y-0.5;
+  }
+  .btn-secondary:hover {
+    border-color: #49720b;
+    color: #49720b;
+  }
+  html.dark .btn-secondary:hover {
+    border-color: #B9FF66;
+    color: #B9FF66;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 bg-red-900/30 hover:bg-red-900/50 text-red-400 font-semibold px-4 py-2 rounded-xl border border-red-800 transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 font-semibold px-4 py-2 rounded-xl border border-red-200 dark:border-red-800 transition-all duration-200;
   }
 
   .btn-ghost {
@@ -84,6 +92,10 @@
     color: var(--text-secondary);
   }
   .btn-ghost:hover {
+    color: #49720b;
+    background: rgba(73, 114, 11, 0.08);
+  }
+  html.dark .btn-ghost:hover {
     color: #B9FF66;
     background: rgba(185,255,102,0.08);
   }
@@ -157,6 +169,31 @@
     height: 24px;
     background: #B9FF66;
     clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+
+  /* Theme-aware lime-contrast text */
+  .text-lime-theme {
+    color: #49720b;
+    transition: color 0.3s ease;
+  }
+  html.dark .text-lime-theme {
+    color: #B9FF66;
+  }
+
+  /* Theme-aware lime border */
+  .border-lime-theme {
+    border-color: rgba(73, 114, 11, 0.2);
+  }
+  html.dark .border-lime-theme {
+    border-color: rgba(185, 255, 102, 0.2);
+  }
+
+  /* Theme-aware lime bg */
+  .bg-lime-theme-light {
+    background-color: rgba(73, 114, 11, 0.1);
+  }
+  html.dark .bg-lime-theme-light {
+    background-color: rgba(185, 255, 102, 0.1);
   }
 }
 

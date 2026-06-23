@@ -90,7 +90,7 @@ const Login = () => {
             <h2 className="font-display text-3xl font-bold dark:text-white text-dark mb-2">Welcome back</h2>
             <p className="dark:text-white/40 text-dark/50">
               Don't have an account?{' '}
-              <Link to="/register" className="text-lime font-semibold hover:text-lime-dark transition-colors">
+              <Link to="/register" className="text-lime-theme font-semibold hover:text-lime-dark transition-colors">
                 Register here
               </Link>
             </p>
@@ -128,7 +128,7 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label htmlFor="password" className="input-label mb-0">Password</label>
-                <button type="button" className="text-xs text-lime hover:text-lime-dark font-medium transition-colors">
+                <button type="button" className="text-xs text-lime-theme hover:text-lime-theme font-medium transition-colors">
                   Forgot password?
                 </button>
               </div>
@@ -148,7 +148,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(s => !s)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30 hover:text-lime transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30 hover:text-lime-theme transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}

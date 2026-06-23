@@ -87,14 +87,14 @@ const Register = () => {
         <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
             <span className="text-3xl">🔍</span>
-            <span className="font-display text-2xl font-extrabold text-lime">FindIt</span>
+            <span className="font-display text-2xl font-extrabold text-lime-theme">FindIt</span>
           </Link>
 
           <span className="section-tag mb-4 inline-block">Create Account</span>
           <h2 className="font-display text-3xl font-extrabold dark:text-white text-dark mb-2">Create Account</h2>
           <p className="dark:text-white/40 text-dark/50 mb-8">
             Already have an account?{' '}
-            <Link to="/login" className="text-lime font-semibold hover:underline">Sign in</Link>
+            <Link to="/login" className="text-lime-theme font-semibold hover:underline">Sign in</Link>
           </p>
 
           {error && (
@@ -128,7 +128,7 @@ const Register = () => {
               <div className="relative">
                 <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30" />
                 <input id="reg-password" name="password" type={showPassword ? 'text' : 'password'} required autoComplete="new-password" value={form.password} onChange={handleChange} placeholder="Min. 6 characters" className="input pl-10 pr-10" />
-                <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30 hover:text-lime transition-colors" aria-label="Toggle password visibility">
+                <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30 hover:text-lime-theme transition-colors" aria-label="Toggle password visibility">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>

@@ -66,10 +66,10 @@ const App = () => {
       <Route
         path="*"
         element={
-          <div className="min-h-screen bg-surface flex flex-col items-center justify-center text-center p-4">
+          <div className="min-h-screen flex flex-col items-center justify-center text-center p-4 transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
             <div className="text-7xl mb-4">🔍</div>
-            <h1 className="font-display text-4xl font-extrabold text-ink mb-2">Page Not Found</h1>
-            <p className="text-slate-500 mb-6">The page you're looking for doesn't exist.</p>
+            <h1 className="font-display text-4xl font-extrabold dark:text-white text-dark mb-2">Page Not Found</h1>
+            <p className="dark:text-white/60 text-dark/60 mb-6">The page you're looking for doesn't exist.</p>
             <a href="/" className="btn-primary">Go Home</a>
           </div>
         }

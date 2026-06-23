@@ -68,8 +68,8 @@ const AddItem = () => {
         <Navbar />
         <main className="max-w-2xl mx-auto px-4 py-12">
           <div className="text-center mb-8 animate-slide-up">
-            <div className="w-16 h-16 bg-lime/15 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle size={32} className="text-lime" />
+            <div className="w-16 h-16 bg-lime-theme-light rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle size={32} className="text-lime-theme" />
             </div>
             <h1 className="font-display text-3xl font-extrabold dark:text-white text-dark mb-2">Item Registered!</h1>
             <p className="dark:text-white/50 text-dark/60">
@@ -161,7 +161,7 @@ const AddItem = () => {
             </div>
 
             {/* Info notice */}
-            <div className="bg-lime/10 border border-lime/20 rounded-xl p-4 text-sm text-lime">
+            <div className="bg-lime-theme-light border border-lime-theme rounded-xl p-4 text-sm text-lime-theme">
               <strong>💡 How it works:</strong> After submitting, we'll generate a unique QR code linked to a public "Found This?" page. Print it and attach it to your item. The finder never sees your personal details.
             </div>
 

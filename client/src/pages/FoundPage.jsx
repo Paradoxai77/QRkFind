@@ -84,10 +84,10 @@ const FoundPage = () => {
   // ── Loading ──
   if (loadingItem) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
         <div className="text-center">
           <Loader className="w-10 h-10 text-primary-500 animate-spin mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">Loading item details...</p>
+          <p className="dark:text-white/50 text-dark/50 font-medium">Loading item details...</p>
         </div>
       </div>
     )
@@ -96,11 +96,11 @@ const FoundPage = () => {
   // ── Error ──
   if (itemError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
-        <div className="card p-10 max-w-md text-center">
+      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+        <div className="rounded-2xl p-10 max-w-md text-center border transition-all duration-300 card-glow" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div className="text-6xl mb-4">❌</div>
-          <h1 className="font-display text-2xl font-bold text-ink mb-2">QR Code Invalid</h1>
-          <p className="text-slate-500 mb-6">{itemError}</p>
+          <h1 className="font-display text-2xl font-bold dark:text-white text-dark mb-2">QR Code Invalid</h1>
+          <p className="dark:text-white/60 text-dark/60 mb-6">{itemError}</p>
           <Link to="/" className="btn-primary">
             Go to FindIt
           </Link>
@@ -112,19 +112,19 @@ const FoundPage = () => {
   // ── Success ──
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-accent-50 to-emerald-50 flex items-center justify-center p-4">
-        <div className="card p-10 max-w-md text-center animate-slide-up">
-          <div className="w-20 h-20 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={40} className="text-accent-500" />
+      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+        <div className="rounded-2xl p-10 max-w-md text-center animate-slide-up border card-glow" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+          <div className="w-20 h-20 bg-lime-theme-light rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={40} className="text-lime-theme" />
           </div>
-          <h1 className="font-display text-3xl font-bold text-ink mb-3">Thank You! 🙌</h1>
-          <p className="text-slate-600 leading-relaxed mb-2">
+          <h1 className="font-display text-3xl font-bold dark:text-white text-dark mb-3">Thank You! 🙌</h1>
+          <p className="dark:text-white/70 text-dark/70 leading-relaxed mb-2">
             Your report has been submitted. The item's owner has been notified and will reach out to you soon.
           </p>
-          <p className="text-sm text-slate-400 mb-8">
+          <p className="text-sm dark:text-white/40 text-dark/45 mb-8">
             You're doing a great thing helping someone recover their lost item.
           </p>
-          <div className="bg-accent-50 border border-accent-200 rounded-xl p-4 text-sm text-accent-700 font-medium">
+          <div className="bg-lime-theme-light border border-lime-theme rounded-xl p-4 text-sm text-lime-theme font-medium">
             🏠 The owner will contact you at the phone number you provided.
           </div>
         </div>
@@ -134,35 +134,38 @@ const FoundPage = () => {
 
   // ── Form ──
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-blue-50 to-surface">
+    <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 px-4 text-center">
+      <header className="backdrop-blur-md border-b py-4 px-4 text-center transition-colors duration-300" style={{ background: 'var(--bg-nav)', borderColor: 'var(--border-color)' }}>
         <Link to="/" className="inline-flex items-center gap-2">
           <span className="text-2xl">🔍</span>
-          <span className="font-display text-xl font-extrabold gradient-text">FindIt</span>
+          <span className="font-display text-xl font-extrabold dark:text-white text-dark">
+            Find<span className="text-lime-theme">It</span>
+          </span>
         </Link>
       </header>
 
       <main className="max-w-lg mx-auto px-4 py-10">
         {/* Item banner */}
-        <div className="card p-6 mb-8 text-center animate-slide-up border-t-4 border-primary-500">
+        <div className="rounded-2xl p-6 mb-8 text-center animate-slide-up border-t-4 border-lime-theme border transition-colors"
+          style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div className="text-5xl mb-3">{CATEGORY_ICONS[item.category] || '📦'}</div>
-          <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 text-xs font-bold px-3 py-1.5 rounded-full mb-3">
+          <div className="inline-flex items-center gap-2 bg-lime-theme-light text-lime-theme text-xs font-bold px-3 py-1.5 rounded-full mb-3">
             You found something!
           </div>
-          <h1 className="font-display text-2xl font-extrabold text-ink mb-1">{item.name}</h1>
+          <h1 className="font-display text-2xl font-extrabold dark:text-white text-dark mb-1">{item.name}</h1>
           {item.description && (
-            <p className="text-slate-500 text-sm">{item.description}</p>
+            <p className="dark:text-white/60 text-dark/60 text-sm">{item.description}</p>
           )}
-          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700 font-medium">
+          <div className="mt-4 bg-amber-500/10 dark:bg-amber-500/20 border border-amber-500/30 text-amber-700 dark:text-amber-400 rounded-xl p-3 text-xs font-medium">
             🔒 The owner's identity is private. Fill out the form below and they'll contact you directly.
           </div>
         </div>
 
         {/* Form card */}
-        <div className="card p-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <h2 className="font-display text-xl font-bold text-ink mb-1">Help Return This Item</h2>
-          <p className="text-slate-500 text-sm mb-6">
+        <div className="rounded-2xl p-8 border transition-colors animate-slide-up" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', animationDelay: '0.1s' }}>
+          <h2 className="font-display text-xl font-bold dark:text-white text-dark mb-1">Help Return This Item</h2>
+          <p className="dark:text-white/60 text-dark/60 text-sm mb-6">
             Leave your contact details and the owner will reach out to you.
           </p>
 
@@ -190,7 +193,7 @@ const FoundPage = () => {
                 Phone Number <span className="text-red-400">*</span>
               </label>
               <div className="relative">
-                <Phone size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Phone size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30" />
                 <input
                   id="found-phone"
                   name="finderPhone"
@@ -210,7 +213,7 @@ const FoundPage = () => {
                 Email Address <span className="text-slate-400 font-normal">(Optional)</span>
               </label>
               <div className="relative">
-                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-white/30 text-dark/30" />
                 <input
                   id="found-email"
                   name="finderEmail"
@@ -226,10 +229,10 @@ const FoundPage = () => {
             {/* Message */}
             <div>
               <label htmlFor="found-message" className="input-label">
-                Message to Owner <span className="text-slate-400 font-normal">(Optional)</span>
+                Message to Owner <span className="dark:text-white/30 text-dark/40 font-normal">(Optional)</span>
               </label>
               <div className="relative">
-                <MessageSquare size={15} className="absolute left-3.5 top-4 text-slate-400" />
+                <MessageSquare size={15} className="absolute left-3.5 top-4 dark:text-white/30 text-dark/30" />
                 <textarea
                   id="found-message"
                   name="message"
@@ -243,23 +246,23 @@ const FoundPage = () => {
             </div>
 
             {/* GPS Location */}
-            <div className="border border-slate-200 rounded-xl p-4">
+            <div className="border rounded-xl p-4 transition-colors" style={{ borderColor: 'var(--border-color)' }}>
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                  <p className="font-semibold text-slate-700 text-sm">Share Your Location</p>
-                  <p className="text-xs text-slate-400 mt-0.5">Helps the owner know where to pick it up</p>
+                  <p className="font-semibold dark:text-white/80 text-dark/80 text-sm">Share Your Location</p>
+                  <p className="text-xs dark:text-white/40 text-dark/45 mt-0.5">Helps the owner know where to pick it up</p>
                 </div>
                 <button
                   type="button"
                   id="gps-button"
                   onClick={handleGPS}
                   disabled={gpsStatus === 'loading' || gpsStatus === 'granted'}
-                  className={`w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
+                  className={`w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 border ${
                     gpsStatus === 'granted'
-                      ? 'bg-accent-50 text-accent-600 border border-accent-200'
+                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
                       : gpsStatus === 'denied'
-                      ? 'bg-red-50 text-red-500 border border-red-200'
-                      : 'bg-primary-50 text-primary-600 border border-primary-200 hover:bg-primary-100'
+                      ? 'bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20'
+                      : 'bg-lime/10 dark:bg-lime/20 text-lime-theme border-lime/20 hover:bg-lime/20 dark:hover:bg-lime/30'
                   }`}
                 >
                   {gpsStatus === 'loading' && <Loader size={14} className="animate-spin" />}
@@ -273,7 +276,7 @@ const FoundPage = () => {
                 </button>
               </div>
               {location && (
-                <p className="text-xs text-slate-400 mt-2 font-mono">
+                <p className="text-xs dark:text-white/40 text-dark/40 mt-2 font-mono">
                   📍 {location.lat.toFixed(5)}, {location.lng.toFixed(5)}
                 </p>
               )}
@@ -299,9 +302,9 @@ const FoundPage = () => {
           </form>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">
+        <p className="text-center text-xs dark:text-white/40 text-dark/40 mt-6">
           Powered by{' '}
-          <Link to="/" className="text-primary-500 font-semibold hover:underline">FindIt</Link>
+          <Link to="/" className="text-lime-theme font-semibold hover:underline">FindIt</Link>
           {' '}— Smart QR Item Recovery
         </p>
       </main>
