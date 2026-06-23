@@ -111,7 +111,7 @@ const sendFoundItemEmail = async ({
           <!-- Footer -->
           <tr>
             <td style="background:#F8FAFC;padding:24px 40px;text-align:center;border-top:1px solid #E2E8F0;">
-              <p style="color:#94A3B8;font-size:13px;margin:0;">— The FindIt Team · Never Lose Your Things Again</p>
+              <p style="color:#94A3B8;font-size:13px;margin:0;">— The QRkFind Team · Never Lose Your Things Again</p>
             </td>
           </tr>
         </table>
@@ -123,9 +123,9 @@ const sendFoundItemEmail = async ({
   `;
 
   await transporter.sendMail({
-    from: `"FindIt" <${process.env.EMAIL_USER}>`,
+    from: `"QRkFind" <${process.env.EMAIL_USER}>`,
     to: ownerEmail,
-    subject: `🔍 Someone Found Your ${itemName}!`,
+    subject: `🔍 Someone Found Your ${itemName}! (via QRkFind)`,
     html: htmlBody,
   });
 };

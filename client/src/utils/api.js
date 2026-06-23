@@ -17,7 +17,7 @@ const api = axios.create({
 
 // Attach JWT token from localStorage to every request
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('findit_token')
+  const token = localStorage.getItem('qrkfind_token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -31,7 +31,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       const isAuthRoute = error.config?.url?.includes('/api/auth/')
       if (!isAuthRoute) {
-        localStorage.removeItem('findit_token')
+        localStorage.removeItem('qrkfind_token')
         window.location.href = '/login'
       }
     }

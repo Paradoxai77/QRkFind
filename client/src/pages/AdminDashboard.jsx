@@ -142,7 +142,7 @@ const AdminDashboard = () => {
               Admin Portal
             </h1>
             <p className="dark:text-white/40 text-dark/50 mt-1">
-              FindIt system status, security overrides, and database governance controls.
+              QRkFind system status, security overrides, and database governance controls.
             </p>
           </div>
           <button

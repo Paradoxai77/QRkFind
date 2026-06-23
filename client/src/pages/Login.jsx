@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle, Scan } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
+import logo from '../assets/logo.png'
 
 const Login = () => {
   const { login } = useAuth()
@@ -53,10 +54,8 @@ const Login = () => {
           </div>
 
           <Link to="/" className="flex items-center gap-3 justify-center mb-8">
-            <div className="w-12 h-12 bg-lime rounded-2xl flex items-center justify-center text-dark">
-              <Scan size={26} />
-            </div>
-            <span className="font-display text-3xl font-bold dark:text-white text-dark">FindIt</span>
+            <img src={logo} alt="QRkFind Logo" className="w-12 h-12 rounded-2xl object-cover" />
+            <span className="font-display text-3xl font-bold dark:text-white text-dark">QRkFind</span>
           </Link>
 
           <h1 className="font-display text-3xl font-bold dark:text-white text-dark mb-4">Welcome Back</h1>
@@ -79,10 +78,8 @@ const Login = () => {
         <div className="w-full max-w-md">
           {/* Logo for mobile */}
           <Link to="/" className="flex items-center gap-2.5 mb-8 lg:hidden">
-            <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark">
-              <Scan size={20} />
-            </div>
-            <span className="font-display text-xl font-bold dark:text-white text-dark">FindIt</span>
+            <img src={logo} alt="QRkFind Logo" className="w-9 h-9 rounded-xl object-cover" />
+            <span className="font-display text-xl font-bold dark:text-white text-dark">QRkFind</span>
           </Link>
 
           <div className="mb-8">

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
+import logo from '../assets/logo.png'
 
 const Register = () => {
   const { register } = useAuth()
@@ -33,7 +34,7 @@ const Register = () => {
     setLoading(true)
     try {
       await register(form.name.trim(), form.email.trim(), form.password)
-      toast.success('Account created! Welcome to FindIt 🎉')
+      toast.success('Account created! Welcome to QRkFind 🎉')
       navigate('/dashboard')
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.')
@@ -62,7 +63,7 @@ const Register = () => {
         </div>
         <div className="relative text-center">
           <div className="text-7xl mb-6">🛡️</div>
-          <h1 className="font-display text-4xl font-extrabold text-dark mb-4">Join FindIt</h1>
+          <h1 className="font-display text-4xl font-extrabold text-dark mb-4">Join QRkFind</h1>
           <p className="text-dark/60 text-lg max-w-xs mx-auto leading-relaxed">
             Register for free and start protecting your valuables with smart QR codes.
           </p>
@@ -86,8 +87,8 @@ const Register = () => {
       <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors" style={{ background: 'var(--bg-surface)' }}>
         <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <span className="text-3xl">🔍</span>
-            <span className="font-display text-2xl font-extrabold text-lime-theme">FindIt</span>
+            <img src={logo} alt="QRkFind Logo" className="w-8 h-8 rounded-lg object-cover" />
+            <span className="font-display text-2xl font-extrabold text-lime-theme">QRkFind</span>
           </Link>
 
           <span className="section-tag mb-4 inline-block">Create Account</span>

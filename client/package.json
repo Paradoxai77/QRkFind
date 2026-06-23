@@ -1,7 +1,7 @@
 {
-  "name": "findit-client",
+  "name": "qrkfind-client",
   "version": "1.0.0",
-  "description": "FindIt frontend — QR-based lost item recovery",
+  "description": "QRkFind frontend — QR-based lost item recovery",
   "type": "module",
   "scripts": {
     "dev": "vite",

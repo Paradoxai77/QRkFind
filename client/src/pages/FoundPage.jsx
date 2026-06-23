@@ -4,6 +4,7 @@ import api from '../utils/api'
 import { MapPin, Phone, Mail, MessageSquare, Send, AlertCircle, CheckCircle, Loader } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { CATEGORY_ICONS } from '../components/QRCard'
+import logo from '../assets/logo.png'
 
 const FoundPage = () => {
   const { itemId } = useParams()
@@ -102,7 +103,7 @@ const FoundPage = () => {
           <h1 className="font-display text-2xl font-bold dark:text-white text-dark mb-2">QR Code Invalid</h1>
           <p className="dark:text-white/60 text-dark/60 mb-6">{itemError}</p>
           <Link to="/" className="btn-primary">
-            Go to FindIt
+            Go to QRkFind
           </Link>
         </div>
       </div>
@@ -138,9 +139,9 @@ const FoundPage = () => {
       {/* Header */}
       <header className="backdrop-blur-md border-b py-4 px-4 text-center transition-colors duration-300" style={{ background: 'var(--bg-nav)', borderColor: 'var(--border-color)' }}>
         <Link to="/" className="inline-flex items-center gap-2">
-          <span className="text-2xl">🔍</span>
+          <img src={logo} alt="QRkFind Logo" className="w-6 h-6 rounded-md object-cover" />
           <span className="font-display text-xl font-extrabold dark:text-white text-dark">
-            Find<span className="text-lime-theme">It</span>
+            QRk<span className="text-lime-theme">Find</span>
           </span>
         </Link>
       </header>
@@ -304,7 +305,7 @@ const FoundPage = () => {
 
         <p className="text-center text-xs dark:text-white/40 text-dark/40 mt-6">
           Powered by{' '}
-          <Link to="/" className="text-lime-theme font-semibold hover:underline">FindIt</Link>
+          <Link to="/" className="text-lime-theme font-semibold hover:underline">QRkFind</Link>
           {' '}— Smart QR Item Recovery
         </p>
       </main>

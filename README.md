@@ -1,8 +1,8 @@
-# 🔍 FindIt — Smart QR-Based Lost Item Recovery Platform
+# 🔍 QRkFind — Smart QR-Based Lost Item Recovery Platform
 
 > Never lose your things again. Generate QR codes for your valuables and get instantly notified when someone finds them.
 
-![FindIt](https://img.shields.io/badge/FindIt-Smart%20QR%20Recovery-2563EB?style=for-the-badge)
+![QRkFind](https://img.shields.io/badge/QRkFind-Smart%20QR%20Recovery-2563EB?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=nodedotjs)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=flat&logo=mongodb)
@@ -90,7 +90,7 @@ QR/
 Open `server/.env` and fill in your values:
 
 ```env
-MONGODB_URI=mongodb://localhost:27017/findit
+MONGODB_URI=mongodb://localhost:27017/qrkfind
 JWT_SECRET=your_long_random_secret_here
 EMAIL_USER=your_gmail@gmail.com
 EMAIL_PASS=your_16_char_app_password
@@ -102,7 +102,7 @@ USE_MOCK_DB=true
 ```
 
 > **MongoDB Atlas**: Replace `MONGODB_URI` with your Atlas connection string, e.g.:
-> `mongodb+srv://user:password@cluster0.xxxxx.mongodb.net/findit` (And make sure `USE_MOCK_DB` is set to `false`).
+> `mongodb+srv://user:password@cluster0.xxxxx.mongodb.net/qrkfind` (And make sure `USE_MOCK_DB` is set to `false`).
 
 ---
 
@@ -129,7 +129,7 @@ Open **two terminal windows**:
 cd server
 npm run dev
 # ✅ MongoDB connected
-# 🚀 FindIt server running on http://localhost:5001
+# 🚀 QRkFind server running on http://localhost:5001
 ```
 
 **Terminal 2 — Frontend:**
@@ -229,4 +229,4 @@ Pull requests welcome! For major changes, please open an issue first.
 
 ---
 
-*Made with ❤️ — FindIt Team*
+*Made with ❤️ — QRkFind Team*

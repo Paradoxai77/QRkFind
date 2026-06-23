@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
-import { ArrowRight, QrCode, Bell, MapPin, Shield, Zap, Heart, Star, Scan, CheckCircle } from 'lucide-react'
+import { ArrowRight, QrCode, Bell, MapPin, Shield, Zap, Heart, Star, CheckCircle } from 'lucide-react'
 import Navbar from '../components/Navbar'
+import logo from '../assets/logo.png'
 
 const STEPS = [
   {
     step: '01',
     icon: <Shield size={32} className="text-dark" />,
     title: 'Register Your Items',
-    desc: "Create an account and register anything you own — keys, phone, laptop, bag. Every item gets a unique identity in FindIt's secure database.",
+    desc: "Create an account and register anything you own — keys, phone, laptop, bag. Every item gets a unique identity in QRkFind's secure database.",
     variant: 'lime',
   },
   {
@@ -45,7 +46,7 @@ const TESTIMONIALS = [
   {
     name: 'Marcus Chen',
     role: 'Photographer',
-    text: 'My camera bag went missing at an event. FindIt saved me — the finder scanned it and I tracked it down in 20 minutes.',
+    text: 'My camera bag went missing at an event. QRkFind saved me — the finder scanned it and I tracked it down in 20 minutes.',
     rating: 5,
   },
   {
@@ -100,7 +101,7 @@ const Landing = () => {
                 Again.
               </h1>
               <p className="text-lg dark:text-white/60 text-dark/60 max-w-lg mb-8 leading-relaxed">
-                Attach a FindIt QR code to your valuables. When someone finds your lost item, they scan it and you're <strong className="dark:text-white text-dark">instantly notified</strong> — no app required for the finder.
+                Attach a QRkFind QR code to your valuables. When someone finds your lost item, they scan it and you're <strong className="dark:text-white text-dark">instantly notified</strong> — no app required for the finder.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <Link to="/register" className="btn-primary text-base px-8 py-4 text-lg rounded-xl">
@@ -128,7 +129,7 @@ const Landing = () => {
                 <svg viewBox="0 0 24 24" fill="#B9FF66" className="w-8 h-8"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
               </div>
               <div className="relative rounded-3xl overflow-hidden border-2 shadow-2xl aspect-video transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
-                <video src="https://videotourl.com/videos/1782086808198-fe3f8030-4658-4186-84a8-b0e8b8f5eaff.mp4" controls autoPlay muted loop className="w-full h-full object-cover" title="How FindIt Opens and Functions" />
+                <video src="https://videotourl.com/videos/1782086808198-fe3f8030-4658-4186-84a8-b0e8b8f5eaff.mp4" controls autoPlay muted loop className="w-full h-full object-cover" title="How QRkFind Opens and Functions" />
                 <div className="absolute inset-0 pointer-events-none rounded-3xl ring-1 ring-inset ring-white/10" />
               </div>
               <div className="absolute -bottom-4 left-6 bg-lime text-dark font-bold px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2 text-sm">
@@ -190,7 +191,7 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <div>
-              <span className="section-tag mb-4 inline-block">Why FindIt</span>
+              <span className="section-tag mb-4 inline-block">Why QRkFind</span>
               <h2 className="font-display text-4xl sm:text-5xl font-bold dark:text-white text-dark max-w-sm">Built for Peace of Mind</h2>
             </div>
           </div>
@@ -242,7 +243,7 @@ const Landing = () => {
           <div className="bg-lime rounded-4xl p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex-1">
               <h2 className="font-display text-4xl sm:text-5xl font-bold text-dark mb-4">Start Protecting Your<br />Valuables Today</h2>
-              <p className="text-dark/60 text-lg">Join FindIt and never lose anything permanently again. It's free — forever.</p>
+              <p className="text-dark/60 text-lg">Join QRkFind and never lose anything permanently again. It's free — forever.</p>
             </div>
             <div className="flex-shrink-0">
               <Link to="/register" className="inline-flex items-center gap-3 bg-dark text-white font-bold px-10 py-5 rounded-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-200 text-lg">
@@ -260,14 +261,14 @@ const Landing = () => {
             <div className="md:w-2/5">
               <span className="section-tag mb-4 inline-block">FAQ</span>
               <h2 className="font-display text-4xl font-bold dark:text-white text-dark mb-4">Frequently Asked Questions</h2>
-              <p className="dark:text-white/40 text-dark/50 text-sm leading-relaxed">Everything you need to know about FindIt and how it works.</p>
+              <p className="dark:text-white/40 text-dark/50 text-sm leading-relaxed">Everything you need to know about QRkFind and how it works.</p>
             </div>
             <div className="md:w-3/5 space-y-4">
               {[
                 { q: 'Does the finder need to download an app?', a: 'No! The finder simply scans the QR code with any smartphone camera. No app, no account needed.' },
                 { q: 'Is my personal information safe?', a: 'Absolutely. Finders never see your name, email, or phone number. All communication goes through our secure system.' },
                 { q: 'How fast will I be notified?', a: 'Notifications are sent within seconds of a finder submitting the form. Usually under 1 minute.' },
-                { q: 'Is FindIt really free?', a: 'Yes, 100% free. No premium tiers, no credit card required, no hidden fees.' },
+                { q: 'Is QRkFind really free?', a: 'Yes, 100% free. No premium tiers, no credit card required, no hidden fees.' },
               ].map((faq, i) => (
                 <details key={i} className="group rounded-2xl overflow-hidden border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
                   <summary className="flex items-center justify-between p-6 cursor-pointer dark:text-white text-dark font-semibold hover:text-lime transition-colors list-none">
@@ -294,10 +295,10 @@ const Landing = () => {
               <span className="text-lime text-sm font-semibold uppercase tracking-widest">Let's make it happen</span>
             </div>
             <h2 className="font-display text-4xl font-bold dark:text-white text-dark mb-4">Contact Us Today</h2>
-            <p className="dark:text-white/40 text-dark/50 mb-8 max-w-md mx-auto">Have questions or want to learn more about how FindIt can help you protect your valuables?</p>
+            <p className="dark:text-white/40 text-dark/50 mb-8 max-w-md mx-auto">Have questions or want to learn more about how QRkFind can help you protect your valuables?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/register" className="btn-primary px-8 py-4 text-lg rounded-xl">Get Your Free Account <ArrowRight size={20} /></Link>
-              <a href="mailto:hello@findit.app" className="btn-secondary px-8 py-4 text-lg rounded-xl">Email Us</a>
+              <a href="mailto:hello@qrkfind.app" className="btn-secondary px-8 py-4 text-lg rounded-xl">Email Us</a>
             </div>
           </div>
         </div>
@@ -308,15 +309,15 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-lime rounded-xl flex items-center justify-center text-dark text-lg font-bold"><Scan size={22} /></div>
-              <span className="font-display font-bold dark:text-white text-dark text-xl">FindIt</span>
+              <img src={logo} alt="QRkFind Logo" className="w-10 h-10 rounded-xl object-cover" />
+              <span className="font-display font-bold dark:text-white text-dark text-xl">QRkFind</span>
             </div>
             <nav className="flex gap-6 text-sm" style={{ color: 'var(--text-muted)' }}>
               <Link to="/" className="hover:text-lime transition-colors">Home</Link>
               <Link to="/login" className="hover:text-lime transition-colors">Sign In</Link>
               <Link to="/register" className="hover:text-lime transition-colors">Get Started</Link>
             </nav>
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>© {new Date().getFullYear()} FindIt. Never Lose Your Things Again.</p>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>© {new Date().getFullYear()} QRkFind. Never Lose Your Things Again.</p>
           </div>
         </div>
       </footer>

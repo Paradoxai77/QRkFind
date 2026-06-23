@@ -29,7 +29,7 @@ const QRCard = ({ itemId, itemName, category }) => {
   const handleDownload = () => {
     if (!qrDataUrl) return
     const link = document.createElement('a')
-    link.download = `findit-qr-${itemName.replace(/\s+/g, '-').toLowerCase()}.png`
+    link.download = `qrkfind-qr-${itemName.replace(/\s+/g, '-').toLowerCase()}.png`
     link.href = qrDataUrl
     link.click()
     toast.success('QR code downloaded!')
@@ -43,7 +43,7 @@ const QRCard = ({ itemId, itemName, category }) => {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>FindIt QR — ${itemName}</title>
+          <title>QRkFind QR — ${itemName}</title>
           <style>
             body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fff; }
             .label { text-align: center; border: 2px solid #E2E8F0; border-radius: 16px; padding: 24px; width: 260px; }
@@ -56,7 +56,7 @@ const QRCard = ({ itemId, itemName, category }) => {
         </head>
         <body>
           <div class="label">
-            <div class="brand">🔍 FINDIT</div>
+            <div class="brand">🔍 QRKFIND</div>
             <img src="${qrDataUrl}" alt="QR Code" />
             <div class="item-name">${CATEGORY_ICONS[category] || '📦'} ${itemName}</div>
             <div class="subtitle">Scan to report this item as found</div>

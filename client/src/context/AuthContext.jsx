@@ -5,7 +5,7 @@ const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(() => localStorage.getItem('findit_token'))
+  const [token, setToken] = useState(() => localStorage.getItem('qrkfind_token'))
   const [loading, setLoading] = useState(true)
 
   // Verify token on mount
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user)
       } catch {
         // Token invalid / expired
-        localStorage.removeItem('findit_token')
+        localStorage.removeItem('qrkfind_token')
         setToken(null)
         setUser(null)
       } finally {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback(async (email, password) => {
     const { data } = await api.post('/api/auth/login', { email, password })
-    localStorage.setItem('findit_token', data.token)
+    localStorage.setItem('qrkfind_token', data.token)
     setToken(data.token)
     setUser(data.user)
     return data
@@ -40,14 +40,14 @@ export const AuthProvider = ({ children }) => {
 
   const register = useCallback(async (name, email, password) => {
     const { data } = await api.post('/api/auth/register', { name, email, password })
-    localStorage.setItem('findit_token', data.token)
+    localStorage.setItem('qrkfind_token', data.token)
     setToken(data.token)
     setUser(data.user)
     return data
   }, [])
 
   const logout = useCallback(() => {
-    localStorage.removeItem('findit_token')
+    localStorage.removeItem('qrkfind_token')
     setToken(null)
     setUser(null)
   }, [])

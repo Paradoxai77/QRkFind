@@ -2,7 +2,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { useState } from 'react'
-import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Scan, Sun, Moon } from 'lucide-react'
+import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Sun, Moon } from 'lucide-react'
+import logo from '../assets/logo.png'
 
 const Navbar = ({ unreadCount = 0 }) => {
   const { user, logout } = useAuth()
@@ -29,11 +30,9 @@ const Navbar = ({ unreadCount = 0 }) => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to={user ? '/dashboard' : '/'} className="flex items-center gap-2.5 font-display group">
-            <div className="w-9 h-9 bg-lime rounded-xl flex items-center justify-center text-dark shadow-lime-glow group-hover:shadow-none transition-all">
-              <Scan size={20} />
-            </div>
+            <img src={logo} alt="QRkFind Logo" className="w-9 h-9 rounded-xl object-cover shadow-lime-glow group-hover:shadow-none transition-all" />
             <span className="text-xl font-bold dark:text-white text-dark group-hover:text-lime-theme transition-colors">
-              Find<span className="text-lime-theme group-hover:text-dark dark:group-hover:text-white transition-colors">It</span>
+              QRk<span className="text-lime-theme group-hover:text-dark dark:group-hover:text-white transition-colors">Find</span>
             </span>
           </Link>
 

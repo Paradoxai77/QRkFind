@@ -1,7 +1,7 @@
 {
-  "name": "findit-server",
+  "name": "qrkfind-server",
   "version": "1.0.0",
-  "description": "FindIt backend API — QR-based lost item recovery",
+  "description": "QRkFind backend API — QR-based lost item recovery",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

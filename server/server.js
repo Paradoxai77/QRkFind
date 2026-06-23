@@ -48,7 +48,7 @@ app.get('/api/health', (req, res) => {
 if (process.env.USE_MOCK_DB === 'true') {
   console.log('🌱 Using Mock In-Memory/JSON database (persisted to uploads/db.json)');
   app.listen(PORT, () => {
-    console.log(`🚀 FindIt server (MOCK DB MODE) running on http://localhost:${PORT}`);
+    console.log(`🚀 QRkFind server (MOCK DB MODE) running on http://localhost:${PORT}`);
   });
 } else {
   mongoose
@@ -56,7 +56,7 @@ if (process.env.USE_MOCK_DB === 'true') {
     .then(() => {
       console.log('✅ MongoDB connected');
       app.listen(PORT, () => {
-        console.log(`🚀 FindIt server running on http://localhost:${PORT}`);
+        console.log(`🚀 QRkFind server running on http://localhost:${PORT}`);
       });
     })
     .catch(err => {
