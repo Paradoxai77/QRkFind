@@ -20,8 +20,13 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) cb(null, true);
-    else cb(new Error('Only image files are allowed'));
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (file.mimetype.startsWith('image/') && allowedExtensions.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files (.jpg, .jpeg, .png, .webp, .gif) are allowed'));
+    }
   },
 });
 
@@ -90,14 +95,21 @@ router.get('/notifications/all', async (req, res) => {
 // PATCH /api/items/reports/:reportId/read — mark report as read
 router.patch('/reports/:reportId/read', async (req, res) => {
   try {
-    const report = await FoundReport.findByIdAndUpdate(
-      req.params.reportId,
-      { isRead: true },
-      { new: true }
-    );
+    const report = await FoundReport.findById(req.params.reportId);
     if (!report) return res.status(404).json({ message: 'Report not found.' });
+
+    // Validate that the report's associated item belongs to the logged-in user (IDOR prevention)
+    const item = await Item.findOne({ _id: report.item, owner: req.user.id });
+    if (!item) {
+      return res.status(403).json({ message: 'Unauthorized. You do not own the item associated with this report.' });
+    }
+
+    report.isRead = true;
+    await report.save();
+
     res.json({ report });
   } catch (err) {
+    console.error('Mark report read error:', err);
     res.status(500).json({ message: 'Server error.' });
   }
 });

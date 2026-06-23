@@ -26,7 +26,8 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const role = email.toLowerCase() === 'pratiknerpagar2@gmail.com' ? 'admin' : 'user';
+    const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase();
+    const role = email.toLowerCase() === adminEmail ? 'admin' : 'user';
     const user = await User.create({ name, email: email.toLowerCase(), passwordHash, role });
 
     const token = jwt.sign(
@@ -64,7 +65,8 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const role = user.role || (user.email.toLowerCase() === 'pratiknerpagar2@gmail.com' ? 'admin' : 'user');
+    const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase();
+    const role = user.role || (user.email.toLowerCase() === adminEmail ? 'admin' : 'user');
     const token = jwt.sign(
       { id: user._id, email: user.email, name: user.name, role },
       process.env.JWT_SECRET,
@@ -86,7 +88,8 @@ router.get('/me', require('../middleware/authMiddleware'), async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-passwordHash');
     if (!user) return res.status(404).json({ message: 'User not found.' });
-    const role = user.role || (user.email.toLowerCase() === 'pratiknerpagar2@gmail.com' ? 'admin' : 'user');
+    const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase();
+    const role = user.role || (user.email.toLowerCase() === adminEmail ? 'admin' : 'user');
     res.json({ user: { id: user._id, name: user.name, email: user.email, role } });
   } catch (err) {
     res.status(500).json({ message: 'Server error.' });
