@@ -77,7 +77,7 @@ const Landing = () => {
   if (user) return <Navigate to="/dashboard" replace />
 
   return (
-    <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+    <div className="min-h-screen transition-colors duration-300">
       <Navbar />
 
       {/* ── Hero ── */}

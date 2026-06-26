@@ -34,7 +34,7 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+    <div className="min-h-screen flex transition-colors duration-300">
       {/* Left panel — decorative (Positivus style) */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative overflow-hidden border-r transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
         {/* Decorative circles */}
@@ -74,7 +74,7 @@ const Login = () => {
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors" style={{ background: 'var(--bg-surface)' }}>
+      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors">
         <div className="w-full max-w-md">
           {/* Logo for mobile */}
           <Link to="/" className="flex items-center gap-2.5 mb-8 lg:hidden">

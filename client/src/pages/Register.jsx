@@ -54,7 +54,7 @@ const Register = () => {
   const strength = passwordStrength()
 
   return (
-    <div className="min-h-screen flex transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+    <div className="min-h-screen flex transition-colors duration-300">
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-lime via-lime-dark to-emerald-600 flex-col justify-center items-center p-12 relative overflow-hidden">
         <div className="absolute inset-0">
@@ -84,7 +84,7 @@ const Register = () => {
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors" style={{ background: 'var(--bg-surface)' }}>
+      <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 transition-colors">
         <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
             <img src={logo} alt="QRkFind Logo" className="w-8 h-8 rounded-lg object-cover" />

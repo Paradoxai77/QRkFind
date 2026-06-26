@@ -85,7 +85,7 @@ const FoundPage = () => {
   // ── Loading ──
   if (loadingItem) {
     return (
-      <div className="min-h-screen flex items-center justify-center transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+      <div className="min-h-screen flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
           <Loader className="w-10 h-10 text-primary-500 animate-spin mx-auto mb-3" />
           <p className="dark:text-white/50 text-dark/50 font-medium">Loading item details...</p>
@@ -97,7 +97,7 @@ const FoundPage = () => {
   // ── Error ──
   if (itemError) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
         <div className="rounded-2xl p-10 max-w-md text-center border transition-all duration-300 card-glow" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div className="text-6xl mb-4">❌</div>
           <h1 className="font-display text-2xl font-bold dark:text-white text-dark mb-2">QR Code Invalid</h1>
@@ -113,7 +113,7 @@ const FoundPage = () => {
   // ── Success ──
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+      <div className="min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
         <div className="rounded-2xl p-10 max-w-md text-center animate-slide-up border card-glow" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div className="w-20 h-20 bg-lime-theme-light rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={40} className="text-lime-theme" />
@@ -135,7 +135,7 @@ const FoundPage = () => {
 
   // ── Form ──
   return (
-    <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-surface)' }}>
+    <div className="min-h-screen transition-colors duration-300">
       {/* Header */}
       <header className="backdrop-blur-md border-b py-4 px-4 text-center transition-colors duration-300" style={{ background: 'var(--bg-nav)', borderColor: 'var(--border-color)' }}>
         <Link to="/" className="inline-flex items-center gap-2">

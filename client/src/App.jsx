@@ -10,10 +10,16 @@ import FoundPage from './pages/FoundPage'
 import Notifications from './pages/Notifications'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminRoute from './components/AdminRoute'
+import DotGrid from './components/DotGrid'
+import { useTheme } from './context/ThemeContext'
 
 const App = () => {
+  const { theme } = useTheme()
+
   return (
-    <Routes>
+    <>
+      <DotGrid activeColor="#38c826" baseColor={theme === 'dark' ? '#313244' : '#d0d1c9'} />
+      <Routes>
       {/* Public routes */}
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
@@ -74,7 +80,8 @@ const App = () => {
           </div>
         }
       />
-    </Routes>
+      </Routes>
+    </>
   )
 }
 
