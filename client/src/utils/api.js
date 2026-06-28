@@ -40,6 +40,19 @@ api.interceptors.response.use(
         window.location.href = '/login'
       }
     }
+    
+    // Enrich network/CORS/mixed-content errors for clear diagnostics
+    if (!error.response) {
+      let customMessage = 'Network error: Cannot reach the backend server. Please make sure the backend is running and CORS is configured.';
+      if (window.location.protocol === 'https:' && getBaseURL().startsWith('http://localhost')) {
+        customMessage = 'Mixed Content Error: This secure HTTPS page is blocked from connecting to insecure HTTP localhost. Please run the app locally (http://localhost:5173) or deploy the backend to a secure HTTPS hosting provider.';
+      }
+      error.response = {
+        data: {
+          message: customMessage
+        }
+      };
+    }
     return Promise.reject(error)
   }
 )

@@ -29,6 +29,9 @@ jobs:
           cache-dependency-path: 'client/package-lock.json'
 
       - name: Install and Build 🔧
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_PUBLIC_URL: ${{ vars.VITE_PUBLIC_URL }}
         run: |
           cd client
           npm install

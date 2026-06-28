@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: qrkfind-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: USE_MOCK_DB
+        value: "true"
+      - key: CLIENT_URL
+        value: https://paradoxai77.github.io
+      - key: MONGODB_URI
+        value: mongodb://localhost:27017/qrkfind # Default fallback, override in Render dashboard if using Atlas
