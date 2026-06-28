@@ -20,10 +20,14 @@ const allowedOrigins = [
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+      return callback(null, true);
     }
+    // Allow local network origins (IP addresses starting with 192.168., 10., or 172.16-31. plus IPv6 loopback [::1])
+    const isLocal = /^http:\/\/(localhost|127\.0\.0\.1|\[::1\]|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(origin);
+    if (isLocal) {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
 }));

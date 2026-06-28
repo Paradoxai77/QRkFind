@@ -4,6 +4,11 @@ const getBaseURL = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
+  // In development, always use relative path to route through Vite's proxy.
+  // This avoids CORS issues and allows testing on local network (e.g. mobile devices).
+  if (import.meta.env.DEV) {
+    return '/';
+  }
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return '/';
   }
