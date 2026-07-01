@@ -73,12 +73,8 @@ Whether it is your backpack, key ring, pet collar, or travel luggage, QRkFind pr
 ## 🔗 Live Demo
 
 <p align="center">
-  <a href="https://paradoxai77.github.io">
+  <a href="https://paradoxai77.github.io/QRkFind">
     <img src="https://img.shields.io/badge/Demo-Launch_App-2563EB?style=for-the-badge&logo=rocket&logoColor=white" alt="Live Demo" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="https://render.com/deploy?repo=https://github.com/Paradoxai77/QRkFind">
-    <img src="https://render.com/images/deploy-to-render.svg" alt="Deploy to Render" height="40" />
   </a>
 </p>
 
