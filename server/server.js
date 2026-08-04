@@ -43,6 +43,11 @@ app.use('/api/items', itemRoutes);
 app.use('/api/found', foundRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Health check endpoint for Render / UptimeRobot
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'QRkFind backend is live' });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
