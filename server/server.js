@@ -69,17 +69,44 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// ─── Auto-seed Admin User ───────────────────────────────────────────────────
+async function ensureAdminUser() {
+  try {
+    const User = require('./models/User');
+    const bcrypt = require('bcryptjs');
+    const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase().trim();
+    const existing = await User.findOne({ email: adminEmail });
+    if (!existing) {
+      const salt = await bcrypt.genSalt(10);
+      const passwordHash = await bcrypt.hash('123456789', salt);
+      await User.create({
+        name: 'Pratik Nerpagar',
+        email: adminEmail,
+        passwordHash,
+        role: 'admin',
+      });
+      console.log(`👑 Auto-seeded permanent admin account: ${adminEmail}`);
+    } else {
+      console.log(`👑 Admin account verified: ${adminEmail}`);
+    }
+  } catch (err) {
+    console.error('ensureAdminUser warning:', err.message);
+  }
+}
+
 // ─── MongoDB Connection ───────────────────────────────────────────────────────
 if (process.env.USE_MOCK_DB === 'true') {
   console.log('🌱 Using Mock In-Memory/JSON database (persisted to uploads/db.json)');
+  ensureAdminUser();
   app.listen(PORT, () => {
     console.log(`🚀 QRkFind server (MOCK DB MODE) running on http://localhost:${PORT}`);
   });
 } else {
   mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => {
+    .then(async () => {
       console.log('✅ MongoDB connected');
+      await ensureAdminUser();
       app.listen(PORT, () => {
         console.log(`🚀 QRkFind server running on http://localhost:${PORT}`);
       });

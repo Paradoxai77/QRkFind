@@ -4,20 +4,97 @@ const { nanoid } = require('nanoid');
 
 const DB_FILE = path.join(__dirname, '../uploads/db.json');
 
-// Initialize local JSON DB
+const SEED_USERS = [
+  {
+    _id: 'admin_pratik_01',
+    name: 'Pratik Nerpagar',
+    email: 'pratiknerpagar2@gmail.com',
+    passwordHash: '$2a$10$NFRBdU7lu29Vg3ra1xxCkuN87tBn.yIbn6f47acGzSZfEIzzT8uz6', // matches '123456789'
+    role: 'admin',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-01-01T00:00:00.000Z',
+  }
+];
+
+const SEED_ITEMS = [
+  {
+    _id: 'item_sample_keys',
+    itemId: 'keys-77a8b9',
+    owner: 'admin_pratik_01',
+    name: 'Car & House Keys',
+    category: 'keys',
+    description: 'Black leather keychain with house keys and car fob.',
+    status: 'active',
+    photoUrl: null,
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-01-01T00:00:00.000Z',
+  },
+  {
+    _id: 'item_sample_backpack',
+    itemId: 'bag-44c5d6',
+    owner: 'admin_pratik_01',
+    name: 'MacBook & Work Backpack',
+    category: 'backpack',
+    description: 'Grey water-resistant commuter backpack with laptop compartment.',
+    status: 'active',
+    photoUrl: null,
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-01-01T00:00:00.000Z',
+  }
+];
+
+// Initialize local JSON DB with persistent seed
 function readDb() {
-  if (!fs.existsSync(DB_FILE)) {
-    const uploadsDir = path.dirname(DB_FILE);
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+  const uploadsDir = path.dirname(DB_FILE);
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+
+  let db = null;
+  if (fs.existsSync(DB_FILE)) {
+    try {
+      db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+    } catch (err) {
+      db = null;
     }
-    fs.writeFileSync(DB_FILE, JSON.stringify({ users: [], items: [], foundreports: [] }, null, 2));
   }
-  try {
-    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-  } catch (err) {
-    return { users: [], items: [], foundreports: [] };
+
+  if (!db || typeof db !== 'object') {
+    db = { users: [], items: [], foundreports: [] };
   }
+
+  if (!Array.isArray(db.users)) db.users = [];
+  if (!Array.isArray(db.items)) db.items = [];
+  if (!Array.isArray(db.foundreports)) db.foundreports = [];
+
+  let needsSave = false;
+
+  // Ensure default admin user is always present
+  const adminIdx = db.users.findIndex(u => u.email?.toLowerCase() === 'pratiknerpagar2@gmail.com');
+  if (adminIdx === -1) {
+    db.users.push(SEED_USERS[0]);
+    needsSave = true;
+  } else {
+    if (db.users[adminIdx].role !== 'admin') {
+      db.users[adminIdx].role = 'admin';
+      needsSave = true;
+    }
+  }
+
+  // Ensure initial items exist for admin so dashboard is never empty
+  const hasAdminItems = db.items.some(i => i.owner?.toString() === 'admin_pratik_01');
+  if (!hasAdminItems) {
+    db.items.push(...SEED_ITEMS);
+    needsSave = true;
+  }
+
+  if (needsSave || !fs.existsSync(DB_FILE)) {
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+    } catch (e) {}
+  }
+
+  return db;
 }
 
 function writeDb(data) {
