@@ -182,7 +182,7 @@ function createModel(collectionName) {
 
     findById: function(id) {
       const coll = getCollection();
-      const found = coll.find(doc => doc._id === id);
+      const found = coll.find(doc => doc._id?.toString() === id?.toString());
       const matched = found ? [ { ...found, collectionName } ] : [];
       return new QueryChain(matched, true, collectionName);
     },
@@ -202,7 +202,7 @@ function createModel(collectionName) {
 
     findByIdAndUpdate: function(id, update, options = {}) {
       const coll = getCollection();
-      const idx = coll.findIndex(doc => doc._id === id);
+      const idx = coll.findIndex(doc => doc._id?.toString() === id?.toString());
       if (idx === -1) return new QueryChain([], true, collectionName);
       
       const updatePayload = update.$set ? { ...update, ...update.$set } : update;
@@ -241,7 +241,7 @@ function createModel(collectionName) {
 
     findByIdAndDelete: async function(id) {
       const coll = getCollection();
-      const idx = coll.findIndex(doc => doc._id === id);
+      const idx = coll.findIndex(doc => doc._id?.toString() === id?.toString());
       if (idx === -1) return null;
       const deleted = coll.splice(idx, 1)[0];
       saveCollection(coll);

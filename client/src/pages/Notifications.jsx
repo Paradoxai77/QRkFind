@@ -153,7 +153,11 @@ const Notifications = () => {
                         </a>
                       </div>
                     )}
-                    {report.location?.lat && (
+                    {report.location &&
+                    typeof report.location.lat === 'number' &&
+                    typeof report.location.lng === 'number' &&
+                    !isNaN(report.location.lat) &&
+                    !isNaN(report.location.lng) ? (
                       <div className="flex items-center gap-2 text-sm">
                         <div className="w-6 h-6 bg-lime-theme-light rounded-lg flex items-center justify-center flex-shrink-0">
                           <MapPin size={11} className="text-lime-theme" />
@@ -166,6 +170,11 @@ const Notifications = () => {
                         >
                           View on Maps
                         </a>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-xs dark:text-white/35 text-dark/40">
+                        <MapPin size={11} className="opacity-40" />
+                        <span>Location not shared</span>
                       </div>
                     )}
                   </div>

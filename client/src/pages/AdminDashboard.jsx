@@ -383,7 +383,12 @@ const AdminDashboard = () => {
                       </tr>
                     ) : (
                       filteredReports.map(r => {
-                        const hasLocation = r.location?.lat && r.location?.lng
+                        const hasLocation =
+                          r.location &&
+                          typeof r.location.lat === 'number' &&
+                          typeof r.location.lng === 'number' &&
+                          !isNaN(r.location.lat) &&
+                          !isNaN(r.location.lng);
                         return (
                           <tr key={r._id} className="hover:bg-white/5 transition-colors">
                             <td className="p-4">

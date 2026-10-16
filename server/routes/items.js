@@ -8,6 +8,15 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
+// Helper to handle database availability errors
+const handleDbError = (err, res, defaultMsg) => {
+  console.error(defaultMsg, err);
+  if (err.name === 'MongooseServerSelectionError' || err.name === 'MongoTimeoutError') {
+    return res.status(503).json({ message: 'Database temporarily unavailable. Please try again shortly.' });
+  }
+  return res.status(500).json({ message: defaultMsg });
+};
+
 // Multer config — store uploaded photos in /uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
@@ -33,14 +42,13 @@ const upload = multer({
 // All routes require auth
 router.use(authMiddleware);
 
-// GET /api/items — list all items for logged-in user
+// GET /api/items — list all items for logged-in user (Strict IDOR protection)
 router.get('/', async (req, res) => {
   try {
     const items = await Item.find({ owner: req.user.id }).sort({ createdAt: -1 });
     res.json({ items });
   } catch (err) {
-    console.error('Get items error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to fetch items.');
   }
 });
 
@@ -49,8 +57,8 @@ router.post('/', upload.single('photo'), async (req, res) => {
   try {
     const { name, category, description } = req.body;
 
-    if (!name || !category) {
-      return res.status(400).json({ message: 'Name and category are required.' });
+    if (!name || !name.trim() || !category || !category.trim()) {
+      return res.status(400).json({ message: 'Item name and category are required.' });
     }
 
     const itemId = nanoid(12);
@@ -59,23 +67,22 @@ router.post('/', upload.single('photo'), async (req, res) => {
     const item = await Item.create({
       itemId,
       owner: req.user.id,
-      name,
-      category,
-      description: description || '',
+      name: name.trim(),
+      category: category.trim(),
+      description: description ? description.trim() : '',
       photoUrl,
       status: 'active',
     });
 
-    res.status(201).json({ item });
+    res.status(201).json({ item, message: 'Item registered successfully.' });
   } catch (err) {
-    console.error('Create item error:', err);
-    res.status(500).json({ message: 'Server error creating item.' });
+    handleDbError(err, res, 'Failed to register item.');
   }
 });
 
 // ── Specific routes MUST come before /:id param routes ──
 
-// GET /api/items/notifications/all — all reports across all user items
+// GET /api/items/notifications/all — all reports across all user items (Strict IDOR protection)
 router.get('/notifications/all', async (req, res) => {
   try {
     const items = await Item.find({ owner: req.user.id }).select('_id name category');
@@ -87,12 +94,11 @@ router.get('/notifications/all', async (req, res) => {
 
     res.json({ reports });
   } catch (err) {
-    console.error('Get notifications error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to fetch notifications.');
   }
 });
 
-// PATCH /api/items/reports/:reportId/read — mark report as read
+// PATCH /api/items/reports/:reportId/read — mark report as read (Strict IDOR protection)
 router.patch('/reports/:reportId/read', async (req, res) => {
   try {
     const report = await FoundReport.findById(req.params.reportId);
@@ -109,12 +115,11 @@ router.patch('/reports/:reportId/read', async (req, res) => {
 
     res.json({ report });
   } catch (err) {
-    console.error('Mark report read error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to update report.');
   }
 });
 
-// GET /api/items/:id — get single item details + found reports
+// GET /api/items/:id — get single item details + found reports (Strict IDOR protection)
 router.get('/:id', async (req, res) => {
   try {
     const item = await Item.findOne({ _id: req.params.id, owner: req.user.id });
@@ -124,17 +129,16 @@ router.get('/:id', async (req, res) => {
 
     res.json({ item, reports });
   } catch (err) {
-    console.error('Get item error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to fetch item details.');
   }
 });
 
-// PATCH /api/items/:id/status — update item status
+// PATCH /api/items/:id/status — update item status (Strict IDOR protection)
 router.patch('/:id/status', async (req, res) => {
   try {
     const { status } = req.body;
     if (!['active', 'lost', 'recovered'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status value.' });
+      return res.status(400).json({ message: 'Invalid status value. Must be active, lost, or recovered.' });
     }
 
     const item = await Item.findOneAndUpdate(
@@ -144,14 +148,13 @@ router.patch('/:id/status', async (req, res) => {
     );
 
     if (!item) return res.status(404).json({ message: 'Item not found.' });
-    res.json({ item });
+    res.json({ item, message: `Item status updated to ${status}.` });
   } catch (err) {
-    console.error('Update status error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to update item status.');
   }
 });
 
-// DELETE /api/items/:id
+// DELETE /api/items/:id (Strict IDOR protection + cascade report cleanup)
 router.delete('/:id', async (req, res) => {
   try {
     const item = await Item.findOneAndDelete({ _id: req.params.id, owner: req.user.id });
@@ -159,10 +162,9 @@ router.delete('/:id', async (req, res) => {
 
     await FoundReport.deleteMany({ item: item._id });
 
-    res.json({ message: 'Item deleted successfully.' });
+    res.json({ message: 'Item and associated reports deleted successfully.' });
   } catch (err) {
-    console.error('Delete item error:', err);
-    res.status(500).json({ message: 'Server error.' });
+    handleDbError(err, res, 'Failed to delete item.');
   }
 });
 

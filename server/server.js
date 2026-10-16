@@ -43,14 +43,30 @@ app.use('/api/items', itemRoutes);
 app.use('/api/found', foundRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Health check endpoint for Render / UptimeRobot
+// Health check endpoints with database connectivity diagnostics
+const getDbStatus = () => {
+  if (process.env.USE_MOCK_DB === 'true') {
+    return { connected: true, type: 'mock-json' };
+  }
+  const states = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  const state = states[mongoose.connection.readyState] || 'unknown';
+  return { connected: mongoose.connection.readyState === 1, type: 'mongodb', state };
+};
+
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'QRkFind backend is live' });
+  res.status(200).json({
+    status: 'ok',
+    message: 'QRkFind backend is live',
+    database: getDbStatus(),
+  });
 });
 
-// Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    database: getDbStatus(),
+  });
 });
 
 // ─── MongoDB Connection ───────────────────────────────────────────────────────
@@ -78,5 +94,9 @@ if (process.env.USE_MOCK_DB === 'true') {
 // ─── Error Handler ────────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
+  if (err.name === 'MongooseServerSelectionError' || err.name === 'MongoTimeoutError') {
+    return res.status(503).json({ message: 'Database temporarily unavailable. Please try again shortly.' });
+  }
   res.status(500).json({ message: err.message || 'Internal server error.' });
 });
+

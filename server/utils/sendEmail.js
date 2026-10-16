@@ -1,15 +1,30 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+/**
+ * Creates a transporter instance if credentials are configured.
+ * Returns null if credentials are missing.
+ */
+function getTransporter() {
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+
+  if (!user || !pass) {
+    return null;
+  }
+
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: user.trim(),
+      pass: pass.trim(),
+    },
+  });
+}
 
 /**
  * Send a "Someone found your item" email to the owner.
+ * Gracefully handles missing credentials, invalid credentials, or provider rejection.
+ *
  * @param {Object} params
  * @param {string} params.ownerEmail
  * @param {string} params.ownerName
@@ -21,6 +36,7 @@ const transporter = nodemailer.createTransport({
  * @param {Object|null} params.location — { lat, lng } or null
  * @param {string} params.timestamp
  * @param {string} params.dashboardUrl
+ * @returns {Promise<{ success: boolean, reason?: string, messageId?: string }>}
  */
 const sendFoundItemEmail = async ({
   ownerEmail,
@@ -34,10 +50,26 @@ const sendFoundItemEmail = async ({
   timestamp,
   dashboardUrl,
 }) => {
-  const locationText =
-    location && location.lat && location.lng
-      ? `<a href="https://www.google.com/maps?q=${location.lat},${location.lng}" style="color:#2563EB;">View on Google Maps (${location.lat.toFixed(5)}, ${location.lng.toFixed(5)})</a>`
-      : 'Not provided';
+  const transporter = getTransporter();
+
+  if (!transporter) {
+    console.warn('⚠️ [Email Alert] EMAIL_USER or EMAIL_PASS not configured. Skipping email dispatch.');
+    return {
+      success: false,
+      reason: 'Email service credentials not configured on the server.',
+    };
+  }
+
+  const hasLocation =
+    location &&
+    typeof location.lat === 'number' &&
+    typeof location.lng === 'number' &&
+    !isNaN(location.lat) &&
+    !isNaN(location.lng);
+
+  const locationText = hasLocation
+    ? `<a href="https://www.google.com/maps?q=${location.lat},${location.lng}" style="color:#2563EB;font-weight:600;">View on Google Maps (${location.lat.toFixed(5)}, ${location.lng.toFixed(5)})</a>`
+    : '<span style="color:#64748B;font-style:italic;">Location not shared by finder</span>';
 
   const htmlBody = `
 <!DOCTYPE html>
@@ -64,10 +96,10 @@ const sendFoundItemEmail = async ({
           <tr>
             <td style="padding:40px;">
               <p style="color:#374151;font-size:16px;line-height:1.6;margin:0 0 24px;">
-                Hi <strong>${ownerName}</strong>,
+                Hi <strong>${ownerName || 'there'}</strong>,
               </p>
               <p style="color:#374151;font-size:16px;line-height:1.6;margin:0 0 28px;">
-                Someone found your item: <strong style="color:#2563EB;">${itemName}</strong>. Here are their details:
+                Someone found your item: <strong style="color:#2563EB;">${itemName}</strong>. Here are the report details:
               </p>
 
               <!-- Info Card -->
@@ -102,7 +134,7 @@ const sendFoundItemEmail = async ({
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center">
-                    <a href="${dashboardUrl}" style="display:inline-block;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 36px;border-radius:10px;letter-spacing:0.2px;">View Dashboard →</a>
+                    <a href="${dashboardUrl}" style="display:inline-block;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 36px;border-radius:10px;letter-spacing:0.2px;">View in QRkFind Dashboard →</a>
                   </td>
                 </tr>
               </table>
@@ -111,7 +143,7 @@ const sendFoundItemEmail = async ({
           <!-- Footer -->
           <tr>
             <td style="background:#F8FAFC;padding:24px 40px;text-align:center;border-top:1px solid #E2E8F0;">
-              <p style="color:#94A3B8;font-size:13px;margin:0;">— The QRkFind Team · Never Lose Your Things Again</p>
+              <p style="color:#94A3B8;font-size:13px;margin:0;">— The QRkFind Team · Privacy-First Lost Item Recovery</p>
             </td>
           </tr>
         </table>
@@ -122,12 +154,25 @@ const sendFoundItemEmail = async ({
 </html>
   `;
 
-  await transporter.sendMail({
-    from: `"QRkFind" <${process.env.EMAIL_USER}>`,
-    to: ownerEmail,
-    subject: `🔍 Someone Found Your ${itemName}! (via QRkFind)`,
-    html: htmlBody,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: `"QRkFind" <${process.env.EMAIL_USER.trim()}>`,
+      to: ownerEmail,
+      subject: `🔍 Someone Found Your ${itemName}! (via QRkFind)`,
+      html: htmlBody,
+    });
+    console.log('✅ [Email Alert] Successfully sent to', ownerEmail, 'MessageId:', info.messageId);
+    return {
+      success: true,
+      messageId: info.messageId,
+    };
+  } catch (err) {
+    console.error('❌ [Email Alert] Failed to send email:', err.message);
+    return {
+      success: false,
+      reason: err.message,
+    };
+  }
 };
 
 module.exports = { sendFoundItemEmail };

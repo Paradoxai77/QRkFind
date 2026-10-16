@@ -5,6 +5,14 @@ const User = require('../models/User');
 
 const router = express.Router();
 
+const handleAuthError = (err, res, defaultMsg) => {
+  console.error(defaultMsg, err);
+  if (err.name === 'MongooseServerSelectionError' || err.name === 'MongoTimeoutError') {
+    return res.status(503).json({ message: 'Database temporarily unavailable. Please try again shortly.' });
+  }
+  return res.status(500).json({ message: defaultMsg });
+};
+
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
@@ -18,7 +26,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Password must be at least 6 characters.' });
     }
 
-    const existing = await User.findOne({ email: email.toLowerCase() });
+    const existing = await User.findOne({ email: email.toLowerCase().trim() });
     if (existing) {
       return res.status(409).json({ message: 'An account with this email already exists.' });
     }
@@ -27,8 +35,13 @@ router.post('/register', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase();
-    const role = email.toLowerCase() === adminEmail ? 'admin' : 'user';
-    const user = await User.create({ name, email: email.toLowerCase(), passwordHash, role });
+    const role = email.toLowerCase().trim() === adminEmail ? 'admin' : 'user';
+    const user = await User.create({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      passwordHash,
+      role,
+    });
 
     const token = jwt.sign(
       { id: user._id, email: user.email, name: user.name, role: user.role || role },
@@ -39,10 +52,10 @@ router.post('/register', async (req, res) => {
     res.status(201).json({
       token,
       user: { id: user._id, name: user.name, email: user.email, role: user.role || role },
+      message: 'Account registered successfully.',
     });
   } catch (err) {
-    console.error('Register error:', err);
-    res.status(500).json({ message: 'Server error during registration.' });
+    handleAuthError(err, res, 'Server error during registration.');
   }
 });
 
@@ -55,7 +68,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
@@ -66,7 +79,7 @@ router.post('/login', async (req, res) => {
     }
 
     const adminEmail = (process.env.ADMIN_EMAIL || 'pratiknerpagar2@gmail.com').toLowerCase();
-    const role = user.role || (user.email.toLowerCase() === adminEmail ? 'admin' : 'user');
+    const role = user.role || (user.email.toLowerCase().trim() === adminEmail ? 'admin' : 'user');
     const token = jwt.sign(
       { id: user._id, email: user.email, name: user.name, role },
       process.env.JWT_SECRET,
@@ -76,10 +89,10 @@ router.post('/login', async (req, res) => {
     res.json({
       token,
       user: { id: user._id, name: user.name, email: user.email, role },
+      message: 'Login successful.',
     });
   } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ message: 'Server error during login.' });
+    handleAuthError(err, res, 'Server error during login.');
   }
 });
 
@@ -92,7 +105,7 @@ router.get('/me', require('../middleware/authMiddleware'), async (req, res) => {
     const role = user.role || (user.email.toLowerCase() === adminEmail ? 'admin' : 'user');
     res.json({ user: { id: user._id, name: user.name, email: user.email, role } });
   } catch (err) {
-    res.status(500).json({ message: 'Server error.' });
+    handleAuthError(err, res, 'Server error verifying session.');
   }
 });
 

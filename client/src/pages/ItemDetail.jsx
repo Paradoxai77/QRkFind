@@ -28,7 +28,12 @@ const LocationMap = ({ lat, lng }) => {
 }
 
 const ReportCard = ({ report }) => {
-  const hasLocation = report.location?.lat && report.location?.lng
+  const hasLocation =
+    report.location &&
+    typeof report.location.lat === 'number' &&
+    typeof report.location.lng === 'number' &&
+    !isNaN(report.location.lat) &&
+    !isNaN(report.location.lng);
   return (
     <div className="rounded-2xl p-5 animate-fade-in border-l-4 border-lime border transition-colors" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
       <div className="flex items-start justify-between gap-3 mb-4">
