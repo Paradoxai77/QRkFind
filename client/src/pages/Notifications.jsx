@@ -4,7 +4,7 @@ import api from '../utils/api'
 import Navbar from '../components/Navbar'
 import { CATEGORY_ICONS } from '../components/QRCard'
 import StatusBadge from '../components/StatusBadge'
-import { Bell, Phone, Mail, MapPin, Clock, ExternalLink } from 'lucide-react'
+import { Bell, Phone, Mail, MapPin, Clock, ExternalLink, Inbox, Plus } from 'lucide-react'
 import { timeAgo, formatDateTime } from '../utils/dateFormat'
 import toast from 'react-hot-toast'
 
@@ -39,13 +39,36 @@ const Notifications = () => {
       <Navbar unreadCount={0} />
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+        {/* Section switcher between QR Alerts and Complain Box */}
+        <div className="flex items-center gap-2 mb-6 p-1.5 rounded-2xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+          <div className="flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 bg-lime-theme-light text-lime-theme border border-lime/30">
+            <Bell size={15} />
+            <span>QR Scan Alerts</span>
+            {reports.length > 0 && (
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-lime text-dark font-bold">
+                {reports.length}
+              </span>
+            )}
+          </div>
+          <Link
+            to="/dashboard/complain-box"
+            className="flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 dark:text-white/70 text-dark/70 hover:text-lime-theme hover:bg-lime-theme-light transition-all"
+          >
+            <Inbox size={15} />
+            <span>Complain Box</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500 border border-amber-500/30">
+              Found Without QR
+            </span>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-lime-theme-light rounded-xl flex items-center justify-center">
             <Bell size={20} className="text-lime-theme" />
           </div>
           <div>
-            <h1 className="page-header mb-0">Notifications</h1>
+            <h1 className="page-header mb-0">Notifications & Alerts</h1>
             <p className="dark:text-white/40 text-dark/50 text-sm mt-0.5">
               {reports.length > 0
                 ? `${reports.length} finder report${reports.length !== 1 ? 's' : ''} across all your items`

@@ -10,6 +10,7 @@ import FoundPage from './pages/FoundPage'
 import Notifications from './pages/Notifications'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminRoute from './components/AdminRoute'
+import ComplainBox from './pages/ComplainBox'
 import DotGrid from './components/DotGrid'
 import { useTheme } from './context/ThemeContext'
 
@@ -25,6 +26,7 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/found/:itemId" element={<FoundPage />} />
+      <Route path="/complain-box" element={<ComplainBox />} />
 
       {/* Protected routes */}
       <Route
@@ -56,6 +58,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <Notifications />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard/complain-box"
+        element={
+          <ProtectedRoute>
+            <ComplainBox />
           </ProtectedRoute>
         }
       />

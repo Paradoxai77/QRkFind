@@ -1,8 +1,8 @@
+import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
-import { useState } from 'react'
-import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Sun, Moon } from 'lucide-react'
+import { Bell, Menu, X, LogOut, LayoutDashboard, Plus, Sun, Moon, Inbox } from 'lucide-react'
 import logo from '../assets/logo.png'
 
 const Navbar = ({ unreadCount = 0 }) => {
@@ -60,6 +60,11 @@ const Navbar = ({ unreadCount = 0 }) => {
                   )}
                 </span>
               </NavLink>
+              <NavLink to="/dashboard/complain-box" className={navLinkClass}>
+                <span className="flex items-center gap-1.5">
+                  <Inbox size={15} /> Complain Box
+                </span>
+              </NavLink>
               {user && (user.role === 'admin' || user.email === 'pratiknerpagar2@gmail.com') && (
                 <NavLink to="/admin" className={navLinkClass}>
                   <span className="flex items-center gap-1.5 font-bold text-red-400">
@@ -70,6 +75,9 @@ const Navbar = ({ unreadCount = 0 }) => {
             </nav>
           ) : (
             <nav className="hidden md:flex items-center gap-6">
+              <NavLink to="/complain-box" className="text-sm font-medium dark:text-white/70 text-dark/70 hover:text-lime-theme transition-colors nav-link-hover flex items-center gap-1.5">
+                <Inbox size={15} /> Complain Box
+              </NavLink>
               <Link to="/login" className="text-sm font-medium dark:text-white/70 text-dark/70 hover:text-lime-theme transition-colors nav-link-hover">
                 Sign In
               </Link>
@@ -149,6 +157,9 @@ const Navbar = ({ unreadCount = 0 }) => {
               <NavLink to="/dashboard/notifications" className={navLinkClass} onClick={() => setMobileOpen(false)}>
                 Notifications {unreadCount > 0 && `(${unreadCount})`}
               </NavLink>
+              <NavLink to="/dashboard/complain-box" className={navLinkClass} onClick={() => setMobileOpen(false)}>
+                📦 Complain Box (No QR)
+              </NavLink>
               {user && (user.role === 'admin' || user.email === 'pratiknerpagar2@gmail.com') && (
                 <NavLink to="/admin" className={navLinkClass} onClick={() => setMobileOpen(false)}>
                   🛡️ Admin Panel
@@ -163,6 +174,9 @@ const Navbar = ({ unreadCount = 0 }) => {
             </>
           ) : (
             <>
+              <Link to="/complain-box" className="block px-3 py-2 text-sm font-medium dark:text-white/70 text-dark/60 hover:text-lime-theme hover:bg-lime-theme-light rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
+                📦 Complain Box (No QR)
+              </Link>
               <Link to="/login" className="block px-3 py-2 text-sm font-medium dark:text-white/70 text-dark/60 hover:text-lime-theme hover:bg-lime-theme-light rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
                 Sign In
               </Link>

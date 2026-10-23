@@ -5,7 +5,7 @@ import api from '../utils/api'
 import Navbar from '../components/Navbar'
 import ItemCard from '../components/ItemCard'
 import { SkeletonGrid } from '../components/SkeletonCard'
-import { Plus, Package, AlertTriangle, CheckCircle, Bell, Scan } from 'lucide-react'
+import { Plus, Package, AlertTriangle, CheckCircle, Bell, Scan, Inbox } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const StatCard = ({ icon, label, value, variant = 'dark' }) => {
@@ -35,6 +35,7 @@ const Dashboard = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [unreadCount, setUnreadCount] = useState(0)
+  const [complaintStats, setComplaintStats] = useState({ unclaimed: 0 })
   const [filter, setFilter] = useState('all')
 
   const fetchItems = async () => {
@@ -55,9 +56,17 @@ const Dashboard = () => {
     } catch {/* silent */}
   }
 
+  const fetchComplaintStats = async () => {
+    try {
+      const { data } = await api.get('/api/complain-box/stats')
+      setComplaintStats(data.stats || { unclaimed: 0 })
+    } catch {/* silent */}
+  }
+
   useEffect(() => {
     fetchItems()
     fetchUnread()
+    fetchComplaintStats()
   }, [])
 
   const handleDelete = async (id, name) => {
@@ -109,17 +118,43 @@ const Dashboard = () => {
                 : `Managing ${items.length} item${items.length !== 1 ? 's' : ''}`}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Link to="/dashboard/notifications" className="relative btn-ghost px-4 py-2.5 text-sm border" style={{ borderColor: 'var(--border-color)' }}>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link
+              to="/dashboard/notifications"
+              className="relative btn-ghost px-4 py-2.5 text-sm border flex items-center gap-2 hover:border-lime-theme transition-colors"
+              style={{ borderColor: 'var(--border-color)' }}
+            >
               <Bell size={16} />
-              Alerts
+              <span>Alerts</span>
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-lime text-dark text-[10px] font-bold rounded-full flex items-center justify-center">
+                <span className="w-5 h-5 bg-lime text-dark text-[10px] font-bold rounded-full flex items-center justify-center">
                   {unreadCount}
                 </span>
               )}
             </Link>
-            <Link to="/dashboard/add-item" className="btn-primary text-sm">
+
+            <Link
+              to="/dashboard/complain-box"
+              className="relative btn-ghost px-4 py-2.5 text-sm border flex items-center gap-2 group hover:border-lime-theme transition-colors"
+              style={{ borderColor: 'var(--border-color)' }}
+              title="Complain Box: Report or claim objects found without a QR code"
+            >
+              <Inbox size={16} className="text-lime-theme group-hover:scale-110 transition-transform" />
+              <span>Complain Box</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-lime/15 text-lime-theme border border-lime/30">
+                No QR
+              </span>
+              {complaintStats.unclaimed > 0 && (
+                <span
+                  className="w-5 h-5 bg-amber-500 text-dark text-[10px] font-bold rounded-full flex items-center justify-center"
+                  title={`${complaintStats.unclaimed} unclaimed objects`}
+                >
+                  {complaintStats.unclaimed}
+                </span>
+              )}
+            </Link>
+
+            <Link to="/dashboard/add-item" className="btn-primary text-sm flex items-center gap-1.5">
               <Plus size={16} /> Add Item
             </Link>
           </div>

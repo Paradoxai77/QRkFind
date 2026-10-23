@@ -43,6 +43,47 @@ const SEED_ITEMS = [
   }
 ];
 
+const SEED_COMPLAINTS = [
+  {
+    _id: 'comp_sample_watch_01',
+    title: 'Titan Chronograph Wristwatch',
+    category: 'watch',
+    description: 'Black dial with brown leather strap, small scratch on bezel near 4 o\'clock.',
+    locationFound: 'Central Library, 2nd Floor Study Room 4',
+    currentLocation: 'Deposited with Library Front Desk Assistant',
+    coordinates: { lat: 18.5204, lng: 73.8567 },
+    dateFound: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+    photoUrl: null,
+    finderName: 'Sameer Joshi',
+    finderPhone: '+91 98230 11223',
+    finderEmail: 'sameer.j@example.com',
+    reportedBy: 'admin_pratik_01',
+    status: 'unclaimed',
+    claimedBy: null,
+    createdAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+  },
+  {
+    _id: 'comp_sample_keys_02',
+    title: 'Set of 2 Honda Bike Keys with Red Tag',
+    category: 'keys',
+    description: 'Honda ignition key + small brass padlock key on a red fabric ribbon keychain.',
+    locationFound: 'Campus Cafeteria near Counter 2',
+    currentLocation: 'With Cafeteria Manager',
+    coordinates: { lat: 18.5215, lng: 73.8572 },
+    dateFound: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+    photoUrl: null,
+    finderName: 'Ananya Sharma',
+    finderPhone: '+91 98765 43210',
+    finderEmail: 'ananya.s@example.com',
+    reportedBy: null,
+    status: 'unclaimed',
+    claimedBy: null,
+    createdAt: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+  }
+];
+
 // Initialize local JSON DB with persistent seed
 function readDb() {
   const uploadsDir = path.dirname(DB_FILE);
@@ -60,12 +101,13 @@ function readDb() {
   }
 
   if (!db || typeof db !== 'object') {
-    db = { users: [], items: [], foundreports: [] };
+    db = { users: [], items: [], foundreports: [], complaints: [] };
   }
 
   if (!Array.isArray(db.users)) db.users = [];
   if (!Array.isArray(db.items)) db.items = [];
   if (!Array.isArray(db.foundreports)) db.foundreports = [];
+  if (!Array.isArray(db.complaints)) db.complaints = [];
 
   let needsSave = false;
 
@@ -85,6 +127,12 @@ function readDb() {
   const hasAdminItems = db.items.some(i => i.owner?.toString() === 'admin_pratik_01');
   if (!hasAdminItems) {
     db.items.push(...SEED_ITEMS);
+    needsSave = true;
+  }
+
+  // Ensure initial complaints exist so complain box has sample items
+  if (db.complaints.length === 0) {
+    db.complaints.push(...SEED_COMPLAINTS);
     needsSave = true;
   }
 
@@ -338,5 +386,6 @@ module.exports = {
   User: createModel('users'),
   Item: createModel('items'),
   FoundReport: createModel('foundreports'),
+  Complaint: createModel('complaints'),
   isMock: true
 };

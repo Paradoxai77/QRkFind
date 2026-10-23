@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/items');
 const foundRoutes = require('./routes/found');
 const adminRoutes = require('./routes/admin');
+const complaintRoutes = require('./routes/complaints');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -42,6 +43,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/found', foundRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/complain-box', complaintRoutes);
 
 // Health check endpoints with database connectivity diagnostics
 const getDbStatus = () => {
